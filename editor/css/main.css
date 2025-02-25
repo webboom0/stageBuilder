@@ -824,7 +824,12 @@ select:hover {
 
 #videoEditTimeline .timelineGroup {
 	overflow-x: auto;
-	background-color: #ccc;
+	background-color: transparent;
+	padding-top: 20px;
+}
+
+#videoEditTimeline .timelineGroup .Row {
+	display: flex;
 }
 
 #videoEditTimeline .timelineBar {
@@ -838,12 +843,60 @@ select:hover {
 	justify-content: flex-start;
 }
 
+#videoEditTimeline .currentFrameBar {
+	background-color: #ff0;
+	height: 15px;
+	width: 3px;
+	position: absolute;
+	left: 0;
+	top: -10px;
+	z-index: 2;
+	transform: translateX(10px);
+}
+
+#videoEditTimeline .currentFrameBar::before {
+	content: "";
+	position: absolute;
+	bottom: -2px;
+	left: 50%;
+	width: 0;
+	height: 0;
+	border-left: 5px solid transparent;
+	border-right: 5px solid transparent;
+	border-top: 10px solid #ff0;
+	display: inline-block;
+	transform: translateX(-54%);
+}
+
 #videoEditTimeline .object {
 	background-color: #ccc;
 	width: 100px;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
+	position: relative;
+	z-index: 2;
+}
+
+#videoEditTimeline .object.active {
+	background-color: #fff;
+}
+
+#videoEditTimeline .objectControl {
+	display: none;
+}
+
+#videoEditTimeline .objectControl.open {
+	display: flex;
+	/* flex-direction: column; */
+	align-items: center;
+	justify-content: center;
+	padding: 5px;
+	position: absolute;
+	right: 0;
+	top: 0;
+	/* transform: translateX(100%); */
+	z-index: 2
 }
 
 #videoEditTimeline .timelineBar>* {
@@ -854,25 +907,35 @@ select:hover {
 	padding: 0;
 	width: 20px;
 	height: 100%;
-	border: solid 1px rgba(255, 255, 255, .3);
-	background-color: #000;
+	border: solid 1px rgba(255, 255, 255, 0);
+	background-color: #656565;
 }
 
+#videoEditTimeline .frameButton.active {
+	background-color: #000;
+	border-color: rgba(255, 255, 255, .5);
+}
+
+
 #videoEditTimeline .frameButton:hover {
-	background-color: #555;
+	background-color: rgba(0, 0, 0, .1);
+	border-color: rgba(255, 255, 255, .3);
 }
 
 #videoEditTimeline .top {
 	display: flex;
-	padding-left: 100px;
+	margin-left: 100px;
+	position: relative;
 }
 
 #videoEditTimeline .top .frameButton {
 	background-color: #ccc;
 	flex-shrink: 0;
 	font-size: 10px;
+	height: 40px;
 
 }
+
 
 #videoEditTimeline .point {
 	/* position: absolute;
@@ -883,4 +946,46 @@ select:hover {
 	background: #ff0;
 	padding: 0;
 	box-sizing: border-box;
+}
+
+#keyframeMenu {
+	display: none;
+}
+
+#keyframeMenu.show {
+	width: 200px;
+	background-color: #ccc;
+	display: flex;
+	flex-direction: column;
+	position: fixed;
+	z-index: 100;
+	border: solid 1px #dcdcdc;
+	box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+	align-items: flex-start;
+	top: 0;
+	border: solid 1px #000;
+}
+
+#keyframeMenu button {
+	border-bottom: solid 1px #bbb;
+	padding: 10px;
+	width: 100%;
+	text-align: left;
+}
+
+#keyframeMenu button:last-child {
+	border-bottom: none;
+}
+
+/* music */
+.music-controls {
+	position: fixed;
+	width: 200px;
+	height: 200px;
+	left: 10px;
+	top: 250px;
+	background-color: #efefef;
+	border-radius: 10px;
+	padding: 10px;
+	z-index: 100;
 }

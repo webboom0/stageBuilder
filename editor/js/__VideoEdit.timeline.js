@@ -127,7 +127,7 @@ function VideoEditTimeline(editor) {
 
   return container;
 }
-
+/*
 export { VideoEditTimeline };
 import * as THREE from "three";
 import { FBXLoader } from "three/examples/jsm/loaders/FBXLoader";
@@ -220,3 +220,4 @@ function animate() {
 
 camera.position.z = 10;
 animate();
+*/

@@ -92,6 +92,8 @@
 		import { Menubar } from './js/Menubar.js';
 		import { Resizer } from './js/Resizer.js';
 		import { VideoEdit } from './js/VideoEdit.js';
+		import { Music } from './js/Music.js';
+		const { createFFmpeg, fetchFile } = FFmpeg;
 
 		window.URL = window.URL || window.webkitURL;
 		window.BlobBuilder = window.BlobBuilder || window.WebKitBlobBuilder || window.MozBlobBuilder;
@@ -127,6 +129,11 @@
 		const videoEdit = new VideoEdit(editor);
 		// document.getElementById('app').appendChild(videoEdit.dom);
 		document.body.appendChild(videoEdit.dom);
+
+
+		const ffmpeg = createFFmpeg({ log: true });
+		const musicEdit = new Music(ffmpeg);
+		document.body.appendChild(musicEdit.dom);
 
 		//
 
@@ -278,6 +285,230 @@
 		}
 
 	</script>
+
+	<!--
+	<style>
+		body {
+			margin: 0;
+		}
+
+		canvas {
+			display: block;
+			width: 100%;
+			height: 200px;
+		}
+	</style>
+	<h1>Audio Frequency Visualizer</h1>
+	<input type="file" id="fileInput" accept="audio/*">
+	<button id="playButton">Play</button>
+	<button id="stopButton">Stop</button>
+	<canvas id="visualizer"></canvas>
+
+	<script>
+		const fileInput = document.getElementById('fileInput');
+		const playButton = document.getElementById('playButton');
+		const stopButton = document.getElementById('stopButton');
+		const canvas = document.getElementById('visualizer');
+		const canvasCtx = canvas.getContext('2d');
+
+		let audioContext;
+		let audioBuffer;
+		let source;
+		let analyser;
+		let dataArray;
+		let animationId;
+
+		fileInput.addEventListener('change', function (event) {
+			const file = event.target.files[0];
+			if (file) {
+				const reader = new FileReader();
+				reader.onload = function (e) {
+					audioContext = new (window.AudioContext || window.webkitAudioContext)();
+					audioContext.decodeAudioData(e.target.result, function (buffer) {
+						audioBuffer = buffer;
+					});
+				};
+				reader.readAsArrayBuffer(file);
+			}
+		});
+
+		playButton.addEventListener('click', function () {
+			if (audioBuffer) {
+				source = audioContext.createBufferSource();
+				analyser = audioContext.createAnalyser();
+				source.buffer = audioBuffer;
+				source.connect(analyser);
+				analyser.connect(audioContext.destination);
+				source.start(0);
+
+				analyser.fftSize = 256;
+				const bufferLength = analyser.frequencyBinCount;
+				dataArray = new Uint8Array(bufferLength);
+
+				draw();
+			}
+		});
+
+		stopButton.addEventListener('click', function () {
+			if (source) {
+				source.stop();
+				cancelAnimationFrame(animationId);
+			}
+		});
+
+		function draw() {
+			animationId = requestAnimationFrame(draw);
+
+			analyser.getByteFrequencyData(dataArray);
+
+			canvasCtx.fillStyle = 'rgb(0, 0, 0)';
+			canvasCtx.fillRect(0, 0, canvas.width, canvas.height);
+
+			const barWidth = (canvas.width / dataArray.length) * 2.5;
+			let barHeight;
+			let x = 0;
+
+			for (let i = 0; i < dataArray.length; i++) {
+				barHeight = dataArray[i];
+
+				canvasCtx.fillStyle = 'rgb(' + (barHeight + 100) + ',50,50)';
+				canvasCtx.fillRect(x, canvas.height - barHeight / 2, barWidth, barHeight / 2);
+
+				x += barWidth + 1;
+			}
+		}
+	</script>
+-->
+	<!-- <div class="music-controls">
+		<input type="file" id="fileInput" accept="audio/*">
+		<input type="number" id="startTime" placeholder="Start Time (s)" min="0">
+		<input type="number" id="endTime" placeholder="End Time (s)" min="0">
+		<button id="cutButton">Cut Audio</button>
+		<audio id="audioPlayer" controls></audio>
+	</div> -->
+
+	<!-- 
+	<script>
+		const { createFFmpeg, fetchFile } = FFmpeg;
+		const ffmpeg = createFFmpeg({ log: true });
+
+		document.getElementById('cutButton').addEventListener('click', async () => {
+			const fileInput = document.getElementById('fileInput');
+			const startTime = document.getElementById('startTime').value;
+			const endTime = document.getElementById('endTime').value;
+			const audioPlayer = document.getElementById('audioPlayer');
+
+			if (!fileInput.files[0]) {
+				alert('Please select an audio file.');
+				return;
+			}
+
+			if (!startTime || !endTime || startTime >= endTime) {
+				alert('Please enter valid start and end times.');
+				return;
+			}
+
+			const file = fileInput.files[0];
+			const fileName = file.name;
+
+			if (!ffmpeg.isLoaded()) {
+				await ffmpeg.load();
+			}
+
+			ffmpeg.FS('writeFile', fileName, await fetchFile(file));
+
+			await ffmpeg.run('-i', fileName, '-ss', startTime, '-to', endTime, '-c', 'copy', 'output.mp3');
+
+			const data = ffmpeg.FS('readFile', 'output.mp3');
+
+			const audioBlob = new Blob([data.buffer], { type: 'audio/mp3' });
+			const audioUrl = URL.createObjectURL(audioBlob);
+
+			audioPlayer.src = audioUrl;
+			audioPlayer.play();
+		});
+	</script> -->
+
+	<!--
+	<style>
+		#controls {
+			margin-top: 20px;
+		}
+
+		#progressBar {
+			width: 100%;
+		}
+	</style>
+	<div class="music-controls">
+
+		<input type="file" id="fileInput" accept="audio/*" multiple>
+		<select id="musicSelect">
+		</select>
+		<div id="controls">
+			<button id="playButton">Play</button>
+			<button id="pauseButton">Pause</button>
+			<button id="stopButton">Stop</button>
+			<input type="range" id="volumeControl" min="0" max="1" step="0.01" value="0.5">
+			<input type="range" id="progressBar" value="0" step="1">
+		</div>
+	</div>
+	<script>
+		const musicSelect = document.getElementById('musicSelect');
+		const playButton = document.getElementById('playButton');
+		const pauseButton = document.getElementById('pauseButton');
+		const stopButton = document.getElementById('stopButton');
+		const volumeControl = document.getElementById('volumeControl');
+		const progressBar = document.getElementById('progressBar');
+		const audio = new Audio();
+		// 음악 파일 목록
+		// const musicFiles = [
+		// 	'/files/music/SUJESHUN.mp3',
+		// 	// 추가적인 음악 파일 경로를 여기에 추가
+		// ];
+
+		// 파일 업로드 시 이벤트 처리
+		fileInput.addEventListener('change', function (event) {
+			const files = event.target.files;
+			for (let i = 0; i < files.length; i++) {
+				const file = files[i];
+				const option = document.createElement('option');
+				option.value = URL.createObjectURL(file);
+				option.textContent = file.name;
+				musicSelect.appendChild(option);
+			}
+		});
+
+
+		playButton.addEventListener('click', function () {
+			if (audio.src !== musicSelect.value) {
+				audio.src = musicSelect.value;
+			}
+			audio.play();
+		});
+
+		pauseButton.addEventListener('click', function () {
+			audio.pause();
+		});
+
+		stopButton.addEventListener('click', function () {
+			audio.pause();
+			audio.currentTime = 0;
+		});
+
+		volumeControl.addEventListener('input', function () {
+			audio.volume = volumeControl.value;
+		});
+
+		audio.addEventListener('timeupdate', function () {
+			progressBar.max = audio.duration;
+			progressBar.value = audio.currentTime;
+		});
+
+		progressBar.addEventListener('input', function () {
+			audio.currentTime = progressBar.value;
+		});
+	</script>
+-->
 </body>
 
 </html>
