@@ -14,6 +14,7 @@ function VideoEditVideo(editor, _totalSeconds, _framesPerSecond) {
   const editorScene = editor.scene;
   const camera = new THREE.PerspectiveCamera(75, 400 / 300, 0.1, 1000);
   const mixers = [];
+
   editorScene.children.forEach((character) => {
     const mixer = new THREE.AnimationMixer(character);
     mixers.push(mixer);
@@ -71,7 +72,7 @@ function VideoEditVideo(editor, _totalSeconds, _framesPerSecond) {
     controls.update();
 
     const existingLights = editorScene.children.filter(
-      (child) => child.isLight,
+      (child) => child.isLight
     );
 
     if (existingLights.length > 0) {
@@ -116,7 +117,7 @@ function VideoEditVideo(editor, _totalSeconds, _framesPerSecond) {
             character.position.lerpVectors(
               prevFrame.position,
               nextFrame.position,
-              t,
+              t
             );
           } else if (prevFrame) {
             character.position.copy(prevFrame.position);

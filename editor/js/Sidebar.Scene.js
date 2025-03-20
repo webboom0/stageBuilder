@@ -255,7 +255,7 @@ function SidebarScene(editor) {
   environmentEquirectangularTexture.setDisplay("none");
   environmentRow.add(environmentEquirectangularTexture);
 
-  container.add(environmentRow);
+  // container.add(environmentRow);
 
   function onEnvironmentChanged() {
     signals.sceneEnvironmentChanged.dispatch(
@@ -313,7 +313,7 @@ function SidebarScene(editor) {
   );
   fogTypeRow.add(fogType);
 
-  container.add(fogTypeRow);
+  // container.add(fogTypeRow);
 
   // fog color
 

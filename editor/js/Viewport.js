@@ -101,8 +101,8 @@ function Viewport(editor) {
                 editor,
                 object,
                 object.position,
-                objectPositionOnDown,
-              ),
+                objectPositionOnDown
+              )
             );
           }
 
@@ -115,8 +115,8 @@ function Viewport(editor) {
                 editor,
                 object,
                 object.rotation,
-                objectRotationOnDown,
-              ),
+                objectRotationOnDown
+              )
             );
           }
 
@@ -129,8 +129,8 @@ function Viewport(editor) {
                 editor,
                 object,
                 object.scale,
-                objectScaleOnDown,
-              ),
+                objectScaleOnDown
+              )
             );
           }
 
@@ -233,7 +233,7 @@ function Viewport(editor) {
 
     const intersects = selector.getPointerIntersects(
       onDoubleClickPosition,
-      camera,
+      camera
     );
 
     if (intersects.length > 0) {
@@ -316,7 +316,7 @@ function Viewport(editor) {
         updateGridColors(
           grid1,
           grid2,
-          event.matches ? GRID_COLORS_DARK : GRID_COLORS_LIGHT,
+          event.matches ? GRID_COLORS_DARK : GRID_COLORS_LIGHT
         );
 
         render();
@@ -326,7 +326,7 @@ function Viewport(editor) {
       updateGridColors(
         grid1,
         grid2,
-        mediaQuery.matches ? GRID_COLORS_DARK : GRID_COLORS_LIGHT,
+        mediaQuery.matches ? GRID_COLORS_DARK : GRID_COLORS_LIGHT
       );
     }
 
@@ -429,7 +429,7 @@ function Viewport(editor) {
     backgroundEquirectangularTexture,
     backgroundBlurriness,
     backgroundIntensity,
-    backgroundRotation,
+    backgroundRotation
   ) {
     scene.background = null;
 
@@ -477,7 +477,7 @@ function Viewport(editor) {
 
   signals.sceneEnvironmentChanged.add(function (
     environmentType,
-    environmentEquirectangularTexture,
+    environmentEquirectangularTexture
   ) {
     scene.environment = null;
 
@@ -506,7 +506,7 @@ function Viewport(editor) {
       case "ModelViewer":
         scene.environment = pmremGenerator.fromScene(
           new RoomEnvironment(),
-          0.04,
+          0.04
         ).texture;
 
         break;
@@ -523,7 +523,7 @@ function Viewport(editor) {
     fogColor,
     fogNear,
     fogFar,
-    fogDensity,
+    fogDensity
   ) {
     switch (fogType) {
       case "None":
@@ -545,7 +545,7 @@ function Viewport(editor) {
     fogColor,
     fogNear,
     fogFar,
-    fogDensity,
+    fogDensity
   ) {
     switch (fogType) {
       case "Fog":
@@ -739,7 +739,7 @@ function Viewport(editor) {
       0,
       0,
       container.dom.offsetWidth,
-      container.dom.offsetHeight,
+      container.dom.offsetHeight
     );
     renderer.render(scene, editor.viewportCamera);
 

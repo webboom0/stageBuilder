@@ -734,7 +734,7 @@ function setQuaternionFromProperEuler(q, a, b, c, order) {
     default:
       console.warn(
         "THREE.MathUtils: .setQuaternionFromProperEuler() encountered an unknown order: " +
-          order,
+          order
       );
   }
 }
@@ -1028,7 +1028,7 @@ class Vector2 {
     const length = this.length();
 
     return this.divideScalar(length || 1).multiplyScalar(
-      clamp(length, min, max),
+      clamp(length, min, max)
     );
   }
 
@@ -1427,7 +1427,7 @@ class Matrix3 {
       -sy * (-s * cx + c * cy) + cy + ty,
       0,
       0,
-      1,
+      1
     );
 
     return this;
@@ -1628,7 +1628,7 @@ const LINEAR_REC709_TO_XYZ = /*@__PURE__*/ new Matrix3().set(
   0.0721923,
   0.0193308,
   0.1191948,
-  0.9505322,
+  0.9505322
 );
 
 const XYZ_TO_LINEAR_REC709 = /*@__PURE__*/ new Matrix3().set(
@@ -1640,7 +1640,7 @@ const XYZ_TO_LINEAR_REC709 = /*@__PURE__*/ new Matrix3().set(
   0.0415551,
   0.0556301,
   -0.203977,
-  1.0569715,
+  1.0569715
 );
 
 function createColorManagement() {
@@ -1722,7 +1722,7 @@ function createColorManagement() {
 
     getLuminanceCoefficients: function (
       target,
-      colorSpace = this.workingColorSpace,
+      colorSpace = this.workingColorSpace
     ) {
       return target.fromArray(this.spaces[colorSpace].luminanceCoefficients);
     },
@@ -1831,7 +1831,7 @@ class ImageUtils {
     if (canvas.width > 2048 || canvas.height > 2048) {
       console.warn(
         "THREE.ImageUtils.getDataURL: Image converted to jpg for performance reasons",
-        image,
+        image
       );
 
       return canvas.toDataURL("image/jpeg", 0.6);
@@ -1886,7 +1886,7 @@ class ImageUtils {
       };
     } else {
       console.warn(
-        "THREE.ImageUtils.sRGBToLinear(): Unsupported image type. No color space conversion applied.",
+        "THREE.ImageUtils.sRGBToLinear(): Unsupported image type. No color space conversion applied."
       );
       return image;
     }
@@ -2000,7 +2000,7 @@ class Texture extends EventDispatcher {
     format = RGBAFormat,
     type = UnsignedByteType,
     anisotropy = Texture.DEFAULT_ANISOTROPY,
-    colorSpace = NoColorSpace,
+    colorSpace = NoColorSpace
   ) {
     super();
 
@@ -2071,7 +2071,7 @@ class Texture extends EventDispatcher {
       this.repeat.y,
       this.rotation,
       this.center.x,
-      this.center.y,
+      this.center.y
     );
   }
 
@@ -2602,7 +2602,7 @@ class Vector4 {
     let s = Math.sqrt(
       (m32 - m23) * (m32 - m23) +
         (m13 - m31) * (m13 - m31) +
-        (m21 - m12) * (m21 - m12),
+        (m21 - m12) * (m21 - m12)
     ); // used to normalize
 
     if (Math.abs(s) < 0.001) s = 1;
@@ -2671,7 +2671,7 @@ class Vector4 {
     const length = this.length();
 
     return this.divideScalar(length || 1).multiplyScalar(
-      clamp(length, min, max),
+      clamp(length, min, max)
     );
   }
 
@@ -2732,7 +2732,7 @@ class Vector4 {
 
   length() {
     return Math.sqrt(
-      this.x * this.x + this.y * this.y + this.z * this.z + this.w * this.w,
+      this.x * this.x + this.y * this.y + this.z * this.z + this.w * this.w
     );
   }
 
@@ -2851,7 +2851,7 @@ class RenderTarget extends EventDispatcher {
         samples: 0,
         count: 1,
       },
-      options,
+      options
     );
 
     const texture = new Texture(
@@ -2864,7 +2864,7 @@ class RenderTarget extends EventDispatcher {
       options.format,
       options.type,
       options.anisotropy,
-      options.colorSpace,
+      options.colorSpace
     );
 
     texture.flipY = false;
@@ -3156,7 +3156,7 @@ class Quaternion {
     src0,
     srcOffset0,
     src1,
-    srcOffset1,
+    srcOffset1
   ) {
     const x0 = src0[srcOffset0];
     const y0 = src0[srcOffset0 + 1];
@@ -3305,7 +3305,7 @@ class Quaternion {
       default:
         console.warn(
           "THREE.Quaternion: .setFromEuler() encountered an unknown order: " +
-            order,
+            order
         );
     }
 
@@ -3471,7 +3471,7 @@ class Quaternion {
       this._x * this._x +
         this._y * this._y +
         this._z * this._z +
-        this._w * this._w,
+        this._w * this._w
     );
   }
 
@@ -3611,7 +3611,7 @@ class Quaternion {
       r1 * Math.sin(theta1),
       r1 * Math.cos(theta1),
       r2 * Math.sin(theta2),
-      r2 * Math.cos(theta2),
+      r2 * Math.cos(theta2)
     );
   }
 
@@ -3909,13 +3909,13 @@ class Vector3 {
 
   project(camera) {
     return this.applyMatrix4(camera.matrixWorldInverse).applyMatrix4(
-      camera.projectionMatrix,
+      camera.projectionMatrix
     );
   }
 
   unproject(camera) {
     return this.applyMatrix4(camera.projectionMatrixInverse).applyMatrix4(
-      camera.matrixWorld,
+      camera.matrixWorld
     );
   }
 
@@ -3985,7 +3985,7 @@ class Vector3 {
     const length = this.length();
 
     return this.divideScalar(length || 1).multiplyScalar(
-      clamp(length, min, max),
+      clamp(length, min, max)
     );
   }
 
@@ -4111,7 +4111,7 @@ class Vector3 {
     // normal is assumed to have unit length
 
     return this.sub(
-      _vector$c.copy(normal).multiplyScalar(2 * this.dot(normal)),
+      _vector$c.copy(normal).multiplyScalar(2 * this.dot(normal))
     );
   }
 
@@ -4280,7 +4280,7 @@ const _quaternion$4 = /*@__PURE__*/ new Quaternion();
 class Box3 {
   constructor(
     min = new Vector3(+Infinity, +Infinity, +Infinity),
-    max = new Vector3(-Infinity, -Infinity, -Infinity),
+    max = new Vector3(-Infinity, -Infinity, -Infinity)
   ) {
     this.isBox3 = true;
 
@@ -4493,7 +4493,7 @@ class Box3 {
     return target.set(
       (point.x - this.min.x) / (this.max.x - this.min.x),
       (point.y - this.min.y) / (this.max.y - this.min.y),
-      (point.z - this.min.z) / (this.max.z - this.min.z),
+      (point.z - this.min.z) / (this.max.z - this.min.z)
     );
   }
 
@@ -5339,7 +5339,7 @@ class Matrix4 {
     n41,
     n42,
     n43,
-    n44,
+    n44
   ) {
     Matrix4.prototype.isMatrix4 = true;
 
@@ -5362,7 +5362,7 @@ class Matrix4 {
         n41,
         n42,
         n43,
-        n44,
+        n44
       );
     }
   }
@@ -5383,7 +5383,7 @@ class Matrix4 {
     n41,
     n42,
     n43,
-    n44,
+    n44
   ) {
     const te = this.elements;
 
@@ -5471,7 +5471,7 @@ class Matrix4 {
       0,
       0,
       0,
-      1,
+      1
     );
 
     return this;
@@ -5502,7 +5502,7 @@ class Matrix4 {
       0,
       0,
       0,
-      1,
+      1
     );
 
     return this;
@@ -6169,7 +6169,7 @@ class Matrix4 {
       0,
       0,
       0,
-      1,
+      1
     );
 
     return this;
@@ -6284,7 +6284,7 @@ class Matrix4 {
     bottom,
     near,
     far,
-    coordinateSystem = WebGLCoordinateSystem,
+    coordinateSystem = WebGLCoordinateSystem
   ) {
     const te = this.elements;
     const x = (2 * near) / (right - left);
@@ -6304,7 +6304,7 @@ class Matrix4 {
     } else {
       throw new Error(
         "THREE.Matrix4.makePerspective(): Invalid coordinate system: " +
-          coordinateSystem,
+          coordinateSystem
       );
     }
 
@@ -6335,7 +6335,7 @@ class Matrix4 {
     bottom,
     near,
     far,
-    coordinateSystem = WebGLCoordinateSystem,
+    coordinateSystem = WebGLCoordinateSystem
   ) {
     const te = this.elements;
     const w = 1.0 / (right - left);
@@ -6356,7 +6356,7 @@ class Matrix4 {
     } else {
       throw new Error(
         "THREE.Matrix4.makeOrthographic(): Invalid coordinate system: " +
-          coordinateSystem,
+          coordinateSystem
       );
     }
 
@@ -6605,7 +6605,7 @@ class Euler {
       default:
         console.warn(
           "THREE.Euler: .setFromRotationMatrix() encountered an unknown order: " +
-            order,
+            order
         );
     }
 
@@ -6981,7 +6981,7 @@ class Object3D extends EventDispatcher {
     if (object === this) {
       console.error(
         "THREE.Object3D.add: object can't be added as a child of itself.",
-        object,
+        object
       );
       return this;
     }
@@ -6999,7 +6999,7 @@ class Object3D extends EventDispatcher {
     } else {
       console.error(
         "THREE.Object3D.add: object not an instance of THREE.Object3D.",
-        object,
+        object
       );
     }
 
@@ -7192,7 +7192,7 @@ class Object3D extends EventDispatcher {
         } else {
           this.matrixWorld.multiplyMatrices(
             this.parent.matrixWorld,
-            this.matrix,
+            this.matrix
           );
         }
       }
@@ -7719,7 +7719,7 @@ class Triangle {
       v1,
       v2,
       v3,
-      target,
+      target
     );
   }
 
@@ -8065,7 +8065,7 @@ class Color {
 
       if (parseFloat(string) < 1) {
         console.warn(
-          "THREE.Color: Alpha component of " + style + " will be ignored.",
+          "THREE.Color: Alpha component of " + style + " will be ignored."
         );
       }
     }
@@ -8085,7 +8085,7 @@ class Color {
           if (
             (color =
               /^\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*(?:,\s*(\d*\.?\d+)\s*)?$/.exec(
-                components,
+                components
               ))
           ) {
             // rgb(255,0,0) rgba(255,0,0,0.5)
@@ -8096,14 +8096,14 @@ class Color {
               Math.min(255, parseInt(color[1], 10)) / 255,
               Math.min(255, parseInt(color[2], 10)) / 255,
               Math.min(255, parseInt(color[3], 10)) / 255,
-              colorSpace,
+              colorSpace
             );
           }
 
           if (
             (color =
               /^\s*(\d+)\%\s*,\s*(\d+)\%\s*,\s*(\d+)\%\s*(?:,\s*(\d*\.?\d+)\s*)?$/.exec(
-                components,
+                components
               ))
           ) {
             // rgb(100%,0%,0%) rgba(100%,0%,0%,0.5)
@@ -8114,7 +8114,7 @@ class Color {
               Math.min(100, parseInt(color[1], 10)) / 100,
               Math.min(100, parseInt(color[2], 10)) / 100,
               Math.min(100, parseInt(color[3], 10)) / 100,
-              colorSpace,
+              colorSpace
             );
           }
 
@@ -8125,7 +8125,7 @@ class Color {
           if (
             (color =
               /^\s*(\d*\.?\d+)\s*,\s*(\d*\.?\d+)\%\s*,\s*(\d*\.?\d+)\%\s*(?:,\s*(\d*\.?\d+)\s*)?$/.exec(
-                components,
+                components
               ))
           ) {
             // hsl(120,50%,50%) hsla(120,50%,50%,0.5)
@@ -8136,7 +8136,7 @@ class Color {
               parseFloat(color[1]) / 360,
               parseFloat(color[2]) / 100,
               parseFloat(color[3]) / 100,
-              colorSpace,
+              colorSpace
             );
           }
 
@@ -8157,7 +8157,7 @@ class Color {
           parseInt(hex.charAt(0), 16) / 15,
           parseInt(hex.charAt(1), 16) / 15,
           parseInt(hex.charAt(2), 16) / 15,
-          colorSpace,
+          colorSpace
         );
       } else if (size === 6) {
         // #ff0000
@@ -8307,12 +8307,12 @@ class Color {
     if (colorSpace !== SRGBColorSpace) {
       // Requires CSS Color Module Level 4 (https://www.w3.org/TR/css-color-4/).
       return `color(${colorSpace} ${r.toFixed(3)} ${g.toFixed(3)} ${b.toFixed(
-        3,
+        3
       )})`;
     }
 
     return `rgb(${Math.round(r * 255)},${Math.round(g * 255)},${Math.round(
-      b * 255,
+      b * 255
     )})`;
   }
 
@@ -8569,7 +8569,7 @@ class Material extends EventDispatcher {
 
       if (newValue === undefined) {
         console.warn(
-          `THREE.Material: parameter '${key}' has value of undefined.`,
+          `THREE.Material: parameter '${key}' has value of undefined.`
         );
         continue;
       }
@@ -8578,7 +8578,7 @@ class Material extends EventDispatcher {
 
       if (currentValue === undefined) {
         console.warn(
-          `THREE.Material: '${key}' is not a property of THREE.${this.type}.`,
+          `THREE.Material: '${key}' is not a property of THREE.${this.type}.`
         );
         continue;
       }
@@ -9189,7 +9189,7 @@ class BufferAttribute {
   constructor(array, itemSize, normalized = false) {
     if (Array.isArray(array)) {
       throw new TypeError(
-        "THREE.BufferAttribute: array should be a Typed Array.",
+        "THREE.BufferAttribute: array should be a Typed Array."
       );
     }
 
@@ -9885,7 +9885,7 @@ class BufferGeometry extends EventDispatcher {
 
       if (points.length > positionAttribute.count) {
         console.warn(
-          "THREE.BufferGeometry: Buffer size too small for points data. Use .dispose() and create a new geometry.",
+          "THREE.BufferGeometry: Buffer size too small for points data. Use .dispose() and create a new geometry."
         );
       }
 
@@ -9906,12 +9906,12 @@ class BufferGeometry extends EventDispatcher {
     if (position && position.isGLBufferAttribute) {
       console.error(
         "THREE.BufferGeometry.computeBoundingBox(): GLBufferAttribute requires a manual bounding box.",
-        this,
+        this
       );
 
       this.boundingBox.set(
         new Vector3(-Infinity, -Infinity, -Infinity),
-        new Vector3(+Infinity, +Infinity, +Infinity),
+        new Vector3(+Infinity, +Infinity, +Infinity)
       );
 
       return;
@@ -9950,7 +9950,7 @@ class BufferGeometry extends EventDispatcher {
     ) {
       console.error(
         'THREE.BufferGeometry.computeBoundingBox(): Computed min/max have NaN values. The "position" attribute is likely to have NaN values.',
-        this,
+        this
       );
     }
   }
@@ -9966,7 +9966,7 @@ class BufferGeometry extends EventDispatcher {
     if (position && position.isGLBufferAttribute) {
       console.error(
         "THREE.BufferGeometry.computeBoundingSphere(): GLBufferAttribute requires a manual bounding sphere.",
-        this,
+        this
       );
 
       this.boundingSphere.set(new Vector3(), Infinity);
@@ -10013,7 +10013,7 @@ class BufferGeometry extends EventDispatcher {
 
         maxRadiusSq = Math.max(
           maxRadiusSq,
-          center.distanceToSquared(_vector$8),
+          center.distanceToSquared(_vector$8)
         );
       }
 
@@ -10034,7 +10034,7 @@ class BufferGeometry extends EventDispatcher {
 
             maxRadiusSq = Math.max(
               maxRadiusSq,
-              center.distanceToSquared(_vector$8),
+              center.distanceToSquared(_vector$8)
             );
           }
         }
@@ -10045,7 +10045,7 @@ class BufferGeometry extends EventDispatcher {
       if (isNaN(this.boundingSphere.radius)) {
         console.error(
           'THREE.BufferGeometry.computeBoundingSphere(): Computed radius is NaN. The "position" attribute is likely to have NaN values.',
-          this,
+          this
         );
       }
     }
@@ -10065,7 +10065,7 @@ class BufferGeometry extends EventDispatcher {
       attributes.uv === undefined
     ) {
       console.error(
-        "THREE.BufferGeometry: .computeTangents() failed. Missing required attributes (index, position, normal or uv)",
+        "THREE.BufferGeometry: .computeTangents() failed. Missing required attributes (index, position, normal or uv)"
       );
       return;
     }
@@ -10077,7 +10077,7 @@ class BufferGeometry extends EventDispatcher {
     if (this.hasAttribute("tangent") === false) {
       this.setAttribute(
         "tangent",
-        new BufferAttribute(new Float32Array(4 * positionAttribute.count), 4),
+        new BufferAttribute(new Float32Array(4 * positionAttribute.count), 4)
       );
     }
 
@@ -10212,7 +10212,7 @@ class BufferGeometry extends EventDispatcher {
       if (normalAttribute === undefined) {
         normalAttribute = new BufferAttribute(
           new Float32Array(positionAttribute.count * 3),
-          3,
+          3
         );
         this.setAttribute("normal", normalAttribute);
       } else {
@@ -10326,7 +10326,7 @@ class BufferGeometry extends EventDispatcher {
 
     if (this.index === null) {
       console.warn(
-        "THREE.BufferGeometry.toNonIndexed(): BufferGeometry is already non-indexed.",
+        "THREE.BufferGeometry.toNonIndexed(): BufferGeometry is already non-indexed."
       );
       return this;
     }
@@ -10586,7 +10586,7 @@ const _intersectionPointWorld = /*@__PURE__*/ new Vector3();
 class Mesh extends Object3D {
   constructor(
     geometry = new BufferGeometry(),
-    material = new MeshBasicMaterial(),
+    material = new MeshBasicMaterial()
   ) {
     super();
 
@@ -10610,7 +10610,7 @@ class Mesh extends Object3D {
     if (source.morphTargetDictionary !== undefined) {
       this.morphTargetDictionary = Object.assign(
         {},
-        source.morphTargetDictionary,
+        source.morphTargetDictionary
       );
     }
 
@@ -10750,8 +10750,8 @@ class Mesh extends Object3D {
             index.count,
             Math.min(
               group.start + group.count,
-              drawRange.start + drawRange.count,
-            ),
+              drawRange.start + drawRange.count
+            )
           );
 
           for (let j = start, jl = end; j < jl; j += 3) {
@@ -10769,7 +10769,7 @@ class Mesh extends Object3D {
               normal,
               a,
               b,
-              c,
+              c
             );
 
             if (intersection) {
@@ -10798,7 +10798,7 @@ class Mesh extends Object3D {
             normal,
             a,
             b,
-            c,
+            c
           );
 
           if (intersection) {
@@ -10820,8 +10820,8 @@ class Mesh extends Object3D {
             position.count,
             Math.min(
               group.start + group.count,
-              drawRange.start + drawRange.count,
-            ),
+              drawRange.start + drawRange.count
+            )
           );
 
           for (let j = start, jl = end; j < jl; j += 3) {
@@ -10839,7 +10839,7 @@ class Mesh extends Object3D {
               normal,
               a,
               b,
-              c,
+              c
             );
 
             if (intersection) {
@@ -10868,7 +10868,7 @@ class Mesh extends Object3D {
             normal,
             a,
             b,
-            c,
+            c
           );
 
           if (intersection) {
@@ -10889,7 +10889,7 @@ function checkIntersection$1(
   pA,
   pB,
   pC,
-  point,
+  point
 ) {
   let intersect;
 
@@ -10901,7 +10901,7 @@ function checkIntersection$1(
       pB,
       pC,
       material.side === FrontSide,
-      point,
+      point
     );
   }
 
@@ -10931,7 +10931,7 @@ function checkGeometryIntersection(
   normal,
   a,
   b,
-  c,
+  c
 ) {
   object.getVertexPosition(a, _vA$1);
   object.getVertexPosition(b, _vB$1);
@@ -10945,7 +10945,7 @@ function checkGeometryIntersection(
     _vA$1,
     _vB$1,
     _vC$1,
-    _intersectionPoint,
+    _intersectionPoint
   );
 
   if (intersection) {
@@ -10959,7 +10959,7 @@ function checkGeometryIntersection(
         b,
         c,
         barycoord,
-        new Vector2(),
+        new Vector2()
       );
     }
 
@@ -10970,7 +10970,7 @@ function checkGeometryIntersection(
         b,
         c,
         barycoord,
-        new Vector2(),
+        new Vector2()
       );
     }
 
@@ -10981,7 +10981,7 @@ function checkGeometryIntersection(
         b,
         c,
         barycoord,
-        new Vector3(),
+        new Vector3()
       );
 
       if (intersection.normal.dot(ray.direction) > 0) {
@@ -11013,7 +11013,7 @@ class BoxGeometry extends BufferGeometry {
     depth = 1,
     widthSegments = 1,
     heightSegments = 1,
-    depthSegments = 1,
+    depthSegments = 1
   ) {
     super();
 
@@ -11061,7 +11061,7 @@ class BoxGeometry extends BufferGeometry {
       width,
       depthSegments,
       heightSegments,
-      0,
+      0
     ); // px
     buildPlane(
       "z",
@@ -11074,7 +11074,7 @@ class BoxGeometry extends BufferGeometry {
       -width,
       depthSegments,
       heightSegments,
-      1,
+      1
     ); // nx
     buildPlane(
       "x",
@@ -11087,7 +11087,7 @@ class BoxGeometry extends BufferGeometry {
       height,
       widthSegments,
       depthSegments,
-      2,
+      2
     ); // py
     buildPlane(
       "x",
@@ -11100,7 +11100,7 @@ class BoxGeometry extends BufferGeometry {
       -height,
       widthSegments,
       depthSegments,
-      3,
+      3
     ); // ny
     buildPlane(
       "x",
@@ -11113,7 +11113,7 @@ class BoxGeometry extends BufferGeometry {
       depth,
       widthSegments,
       heightSegments,
-      4,
+      4
     ); // pz
     buildPlane(
       "x",
@@ -11126,7 +11126,7 @@ class BoxGeometry extends BufferGeometry {
       -depth,
       widthSegments,
       heightSegments,
-      5,
+      5
     ); // nz
 
     // build geometry
@@ -11147,7 +11147,7 @@ class BoxGeometry extends BufferGeometry {
       depth,
       gridX,
       gridY,
-      materialIndex,
+      materialIndex
     ) {
       const segmentWidth = width / gridX;
       const segmentHeight = height / gridY;
@@ -11256,7 +11256,7 @@ class BoxGeometry extends BufferGeometry {
       data.depth,
       data.widthSegments,
       data.heightSegments,
-      data.depthSegments,
+      data.depthSegments
     );
   }
 }
@@ -11287,7 +11287,7 @@ function cloneUniforms(src) {
       ) {
         if (property.isRenderTargetTexture) {
           console.warn(
-            "UniformsUtils: Textures of render targets cannot be cloned via cloneUniforms() or mergeUniforms().",
+            "UniformsUtils: Textures of render targets cannot be cloned via cloneUniforms() or mergeUniforms()."
           );
           dst[u][p] = null;
         } else {
@@ -11777,7 +11777,7 @@ class PerspectiveCamera extends Camera {
       top - height,
       near,
       this.far,
-      this.coordinateSystem,
+      this.coordinateSystem
     );
 
     this.projectionMatrixInverse.copy(this.projectionMatrix).invert();
@@ -11891,7 +11891,7 @@ class CubeCamera extends Object3D {
     } else {
       throw new Error(
         "THREE.CubeCamera.updateCoordinateSystem(): Invalid coordinate system: " +
-          coordinateSystem,
+          coordinateSystem
       );
     }
 
@@ -11954,7 +11954,7 @@ class CubeCamera extends Object3D {
     renderer.setRenderTarget(
       currentRenderTarget,
       currentActiveCubeFace,
-      currentActiveMipmapLevel,
+      currentActiveMipmapLevel
     );
 
     renderer.xr.enabled = currentXrEnabled;
@@ -11974,7 +11974,7 @@ class CubeTexture extends Texture {
     format,
     type,
     anisotropy,
-    colorSpace,
+    colorSpace
   ) {
     images = images !== undefined ? images : [];
     mapping = mapping !== undefined ? mapping : CubeReflectionMapping;
@@ -11989,7 +11989,7 @@ class CubeTexture extends Texture {
       format,
       type,
       anisotropy,
-      colorSpace,
+      colorSpace
     );
 
     this.isCubeTexture = true;
@@ -12025,7 +12025,7 @@ class WebGLCubeRenderTarget extends WebGLRenderTarget {
       options.format,
       options.type,
       options.anisotropy,
-      options.colorSpace,
+      options.colorSpace
     );
 
     // By convention -- likely based on the RenderMan spec from the 1990's -- cube maps are specified by WebGL (and three.js)
@@ -12169,7 +12169,7 @@ class FogExp2 {
 
 class Fog {
   constructor(color, near = 1, far = 1000) {
-    this.isFog = true;
+    this.isFog = false;
 
     this.name = "";
 
@@ -12217,7 +12217,7 @@ class Scene extends Object3D {
 
     if (typeof __THREE_DEVTOOLS__ !== "undefined") {
       __THREE_DEVTOOLS__.dispatchEvent(
-        new CustomEvent("observe", { detail: this }),
+        new CustomEvent("observe", { detail: this })
       );
     }
   }
@@ -12340,7 +12340,7 @@ class InterleavedBuffer {
     }
 
     const array = new this.array.constructor(
-      data.arrayBuffers[this.array.buffer._uuid],
+      data.arrayBuffers[this.array.buffer._uuid]
     );
 
     const ib = new this.constructor(array, this.stride);
@@ -12368,7 +12368,7 @@ class InterleavedBuffer {
 
     if (data.arrayBuffers[this.array.buffer._uuid] === undefined) {
       data.arrayBuffers[this.array.buffer._uuid] = Array.from(
-        new Uint32Array(this.array.buffer),
+        new Uint32Array(this.array.buffer)
       );
     }
 
@@ -12577,7 +12577,7 @@ class InterleavedBufferAttribute {
   clone(data) {
     if (data === undefined) {
       console.log(
-        "THREE.InterleavedBufferAttribute.clone(): Cloning an interleaved buffer attribute will de-interleave buffer data.",
+        "THREE.InterleavedBufferAttribute.clone(): Cloning an interleaved buffer attribute will de-interleave buffer data."
       );
 
       const array = [];
@@ -12593,7 +12593,7 @@ class InterleavedBufferAttribute {
       return new BufferAttribute(
         new this.array.constructor(array),
         this.itemSize,
-        this.normalized,
+        this.normalized
       );
     } else {
       if (data.interleavedBuffers === undefined) {
@@ -12608,7 +12608,7 @@ class InterleavedBufferAttribute {
         data.interleavedBuffers[this.data.uuid],
         this.itemSize,
         this.offset,
-        this.normalized,
+        this.normalized
       );
     }
   }
@@ -12616,7 +12616,7 @@ class InterleavedBufferAttribute {
   toJSON(data) {
     if (data === undefined) {
       console.log(
-        "THREE.InterleavedBufferAttribute.toJSON(): Serializing an interleaved buffer attribute will de-interleave buffer data.",
+        "THREE.InterleavedBufferAttribute.toJSON(): Serializing an interleaved buffer attribute will de-interleave buffer data."
       );
 
       const array = [];
@@ -12742,11 +12742,11 @@ class Sprite extends Object3D {
       _geometry.setIndex([0, 1, 2, 0, 2, 3]);
       _geometry.setAttribute(
         "position",
-        new InterleavedBufferAttribute(interleavedBuffer, 3, 0, false),
+        new InterleavedBufferAttribute(interleavedBuffer, 3, 0, false)
       );
       _geometry.setAttribute(
         "uv",
-        new InterleavedBufferAttribute(interleavedBuffer, 2, 3, false),
+        new InterleavedBufferAttribute(interleavedBuffer, 2, 3, false)
       );
     }
 
@@ -12759,7 +12759,7 @@ class Sprite extends Object3D {
   raycast(raycaster, intersects) {
     if (raycaster.camera === null) {
       console.error(
-        'THREE.Sprite: "Raycaster.camera" needs to be set in order to raycast against sprites.',
+        'THREE.Sprite: "Raycaster.camera" needs to be set in order to raycast against sprites.'
       );
     }
 
@@ -12768,7 +12768,7 @@ class Sprite extends Object3D {
     _viewWorldMatrix.copy(raycaster.camera.matrixWorld);
     this.modelViewMatrix.multiplyMatrices(
       raycaster.camera.matrixWorldInverse,
-      this.matrixWorld,
+      this.matrixWorld
     );
 
     _mvPosition.setFromMatrixPosition(this.modelViewMatrix);
@@ -12796,7 +12796,7 @@ class Sprite extends Object3D {
       center,
       _worldScale,
       sin,
-      cos,
+      cos
     );
     transformVertex(
       _vB.set(0.5, -0.5, 0),
@@ -12804,7 +12804,7 @@ class Sprite extends Object3D {
       center,
       _worldScale,
       sin,
-      cos,
+      cos
     );
     transformVertex(
       _vC.set(0.5, 0.5, 0),
@@ -12812,7 +12812,7 @@ class Sprite extends Object3D {
       center,
       _worldScale,
       sin,
-      cos,
+      cos
     );
 
     _uvA.set(0, 0);
@@ -12825,7 +12825,7 @@ class Sprite extends Object3D {
       _vB,
       _vC,
       false,
-      _intersectPoint,
+      _intersectPoint
     );
 
     if (intersect === null) {
@@ -12836,7 +12836,7 @@ class Sprite extends Object3D {
         center,
         _worldScale,
         sin,
-        cos,
+        cos
       );
       _uvB.set(0, 1);
 
@@ -12845,7 +12845,7 @@ class Sprite extends Object3D {
         _vC,
         _vB,
         false,
-        _intersectPoint,
+        _intersectPoint
       );
       if (intersect === null) {
         return;
@@ -12867,7 +12867,7 @@ class Sprite extends Object3D {
         _uvA,
         _uvB,
         _uvC,
-        new Vector2(),
+        new Vector2()
       ),
       face: null,
       object: this,
@@ -13253,7 +13253,7 @@ class SkinnedMesh extends Mesh {
       this.bindMatrixInverse.copy(this.bindMatrix).invert();
     } else {
       console.warn(
-        "THREE.SkinnedMesh: Unrecognized bindMode: " + this.bindMode,
+        "THREE.SkinnedMesh: Unrecognized bindMode: " + this.bindMode
       );
     }
   }
@@ -13277,12 +13277,12 @@ class SkinnedMesh extends Mesh {
 
         _matrix4.multiplyMatrices(
           skeleton.bones[boneIndex].matrixWorld,
-          skeleton.boneInverses[boneIndex],
+          skeleton.boneInverses[boneIndex]
         );
 
         vector.addScaledVector(
           _vector3.copy(_basePosition).applyMatrix4(_matrix4),
-          weight,
+          weight
         );
       }
     }
@@ -13314,7 +13314,7 @@ class DataTexture extends Texture {
     magFilter = NearestFilter,
     minFilter = NearestFilter,
     anisotropy,
-    colorSpace,
+    colorSpace
   ) {
     super(
       null,
@@ -13326,7 +13326,7 @@ class DataTexture extends Texture {
       format,
       type,
       anisotropy,
-      colorSpace,
+      colorSpace
     );
 
     this.isDataTexture = true;
@@ -13370,7 +13370,7 @@ class Skeleton {
 
       if (bones.length !== boneInverses.length) {
         console.warn(
-          "THREE.Skeleton: Number of inverse bone matrices does not match amount of bones.",
+          "THREE.Skeleton: Number of inverse bone matrices does not match amount of bones."
         );
 
         this.boneInverses = [];
@@ -13471,7 +13471,7 @@ class Skeleton {
       size,
       size,
       RGBAFormat,
-      FloatType,
+      FloatType
     );
     boneTexture.needsUpdate = true;
 
@@ -13596,7 +13596,7 @@ class InstancedMesh extends Mesh {
 
     this.instanceMatrix = new InstancedBufferAttribute(
       new Float32Array(count * 16),
-      16,
+      16
     );
     this.instanceColor = null;
     this.morphTexture = null;
@@ -13751,7 +13751,7 @@ class InstancedMesh extends Mesh {
     if (this.instanceColor === null) {
       this.instanceColor = new InstancedBufferAttribute(
         new Float32Array(this.instanceMatrix.count * 3).fill(1),
-        3,
+        3
       );
     }
 
@@ -13773,7 +13773,7 @@ class InstancedMesh extends Mesh {
         len,
         this.count,
         RedFormat,
-        FloatType,
+        FloatType
       );
     }
 
@@ -13979,7 +13979,7 @@ class Frustum {
     p2 = new Plane(),
     p3 = new Plane(),
     p4 = new Plane(),
-    p5 = new Plane(),
+    p5 = new Plane()
   ) {
     this.planes = [p0, p1, p2, p3, p4, p5];
   }
@@ -14052,7 +14052,7 @@ class Frustum {
     } else {
       throw new Error(
         "THREE.Frustum.setFromProjectionMatrix(): Invalid coordinate system: " +
-          coordinateSystem,
+          coordinateSystem
       );
     }
 
@@ -14254,7 +14254,7 @@ class BatchedMesh extends Mesh {
     maxInstanceCount,
     maxVertexCount,
     maxIndexCount = maxVertexCount * 2,
-    material,
+    material
   ) {
     super(new BufferGeometry(), material);
 
@@ -14320,7 +14320,7 @@ class BatchedMesh extends Mesh {
       size,
       size,
       RGBAFormat,
-      FloatType,
+      FloatType
     );
 
     this._matricesTexture = matricesTexture;
@@ -14336,7 +14336,7 @@ class BatchedMesh extends Mesh {
       size,
       size,
       RedIntegerFormat,
-      UnsignedIntType,
+      UnsignedIntType
     );
 
     this._indirectTexture = indirectTexture;
@@ -14353,7 +14353,7 @@ class BatchedMesh extends Mesh {
       size,
       size,
       RGBAFormat,
-      FloatType,
+      FloatType
     );
     colorsTexture.colorSpace = ColorManagement.workingColorSpace;
 
@@ -14373,7 +14373,7 @@ class BatchedMesh extends Mesh {
         const dstAttribute = new BufferAttribute(
           dstArray,
           itemSize,
-          normalized,
+          normalized
         );
 
         geometry.setAttribute(attributeName, dstAttribute);
@@ -14399,14 +14399,14 @@ class BatchedMesh extends Mesh {
     const batchGeometry = this.geometry;
     if (Boolean(geometry.getIndex()) !== Boolean(batchGeometry.getIndex())) {
       throw new Error(
-        'THREE.BatchedMesh: All geometries must consistently have "index".',
+        'THREE.BatchedMesh: All geometries must consistently have "index".'
       );
     }
 
     for (const attributeName in batchGeometry.attributes) {
       if (!geometry.hasAttribute(attributeName)) {
         throw new Error(
-          `THREE.BatchedMesh: Added geometry missing "${attributeName}". All geometries must have consistent attributes.`,
+          `THREE.BatchedMesh: Added geometry missing "${attributeName}". All geometries must have consistent attributes.`
         );
       }
 
@@ -14417,7 +14417,7 @@ class BatchedMesh extends Mesh {
         srcAttribute.normalized !== dstAttribute.normalized
       ) {
         throw new Error(
-          "THREE.BatchedMesh: All attributes must have a consistent itemSize and normalized value.",
+          "THREE.BatchedMesh: All attributes must have a consistent itemSize and normalized value."
         );
       }
     }
@@ -14431,7 +14431,7 @@ class BatchedMesh extends Mesh {
       instanceInfo[instanceId].active === false
     ) {
       throw new Error(
-        `THREE.BatchedMesh: Invalid instanceId ${instanceId}. Instance is either out of range or has been deleted.`,
+        `THREE.BatchedMesh: Invalid instanceId ${instanceId}. Instance is either out of range or has been deleted.`
       );
     }
   }
@@ -14444,7 +14444,7 @@ class BatchedMesh extends Mesh {
       geometryInfoList[geometryId].active === false
     ) {
       throw new Error(
-        `THREE.BatchedMesh: Invalid geometryId ${geometryId}. Geometry is either out of range or has been deleted.`,
+        `THREE.BatchedMesh: Invalid geometryId ${geometryId}. Geometry is either out of range or has been deleted.`
       );
     }
   }
@@ -14581,7 +14581,7 @@ class BatchedMesh extends Mesh {
         this._maxVertexCount
     ) {
       throw new Error(
-        "THREE.BatchedMesh: Reserved space request exceeds the maximum buffer size.",
+        "THREE.BatchedMesh: Reserved space request exceeds the maximum buffer size."
       );
     }
 
@@ -14627,7 +14627,7 @@ class BatchedMesh extends Mesh {
       geometry.attributes.position.count > geometryInfo.reservedVertexCount
     ) {
       throw new Error(
-        "THREE.BatchedMesh: Reserved space not large enough for provided geometry.",
+        "THREE.BatchedMesh: Reserved space not large enough for provided geometry."
       );
     }
 
@@ -14654,7 +14654,7 @@ class BatchedMesh extends Mesh {
       dstAttribute.needsUpdate = true;
       dstAttribute.addUpdateRange(
         vertexStart * itemSize,
-        reservedVertexCount * itemSize,
+        reservedVertexCount * itemSize
       );
     }
 
@@ -14777,7 +14777,7 @@ class BatchedMesh extends Mesh {
           index.array.copyWithin(
             nextIndexStart,
             indexStart,
-            indexStart + reservedIndexCount,
+            indexStart + reservedIndexCount
           );
           index.addUpdateRange(nextIndexStart, reservedIndexCount);
 
@@ -14797,11 +14797,11 @@ class BatchedMesh extends Mesh {
           array.copyWithin(
             nextVertexStart * itemSize,
             vertexStart * itemSize,
-            (vertexStart + reservedVertexCount) * itemSize,
+            (vertexStart + reservedVertexCount) * itemSize
           );
           attribute.addUpdateRange(
             nextVertexStart * itemSize,
-            reservedVertexCount * itemSize,
+            reservedVertexCount * itemSize
           );
         }
 
@@ -14888,7 +14888,7 @@ class BatchedMesh extends Mesh {
         _vector$5.fromBufferAttribute(position, iv);
         maxRadiusSq = Math.max(
           maxRadiusSq,
-          sphere.center.distanceToSquared(_vector$5),
+          sphere.center.distanceToSquared(_vector$5)
         );
       }
 
@@ -15002,7 +15002,7 @@ class BatchedMesh extends Mesh {
     // throw an error if it can't be shrunk to the desired size
     if (maxInstanceCount < instanceInfo.length) {
       throw new Error(
-        `BatchedMesh: Instance ids outside the range ${maxInstanceCount} are being used. Cannot shrink instance count.`,
+        `BatchedMesh: Instance ids outside the range ${maxInstanceCount} are being used. Cannot shrink instance count.`
       );
     }
 
@@ -15025,14 +15025,14 @@ class BatchedMesh extends Mesh {
     this._initIndirectTexture();
     copyArrayContents(
       indirectTexture.image.data,
-      this._indirectTexture.image.data,
+      this._indirectTexture.image.data
     );
 
     matricesTexture.dispose();
     this._initMatricesTexture();
     copyArrayContents(
       matricesTexture.image.data,
-      this._matricesTexture.image.data,
+      this._matricesTexture.image.data
     );
 
     if (colorsTexture) {
@@ -15040,7 +15040,7 @@ class BatchedMesh extends Mesh {
       this._initColorsTexture();
       copyArrayContents(
         colorsTexture.image.data,
-        this._colorsTexture.image.data,
+        this._colorsTexture.image.data
       );
     }
   }
@@ -15050,12 +15050,12 @@ class BatchedMesh extends Mesh {
     const validRanges = [...this._geometryInfo].filter((info) => info.active);
     const requiredVertexLength = Math.max(
       ...validRanges.map(
-        (range) => range.vertexStart + range.reservedVertexCount,
-      ),
+        (range) => range.vertexStart + range.reservedVertexCount
+      )
     );
     if (requiredVertexLength > maxVertexCount) {
       throw new Error(
-        `BatchedMesh: Geometry vertex values are being used outside the range ${maxIndexCount}. Cannot shrink further.`,
+        `BatchedMesh: Geometry vertex values are being used outside the range ${maxIndexCount}. Cannot shrink further.`
       );
     }
 
@@ -15063,12 +15063,12 @@ class BatchedMesh extends Mesh {
     if (this.geometry.index) {
       const requiredIndexLength = Math.max(
         ...validRanges.map(
-          (range) => range.indexStart + range.reservedIndexCount,
-        ),
+          (range) => range.indexStart + range.reservedIndexCount
+        )
       );
       if (requiredIndexLength > maxIndexCount) {
         throw new Error(
-          `BatchedMesh: Geometry index values are being used outside the range ${maxIndexCount}. Cannot shrink further.`,
+          `BatchedMesh: Geometry index values are being used outside the range ${maxIndexCount}. Cannot shrink further.`
         );
       }
     }
@@ -15098,7 +15098,7 @@ class BatchedMesh extends Mesh {
     for (const key in oldGeometry.attributes) {
       copyArrayContents(
         oldGeometry.attributes[key].array,
-        geometry.attributes[key].array,
+        geometry.attributes[key].array
       );
     }
   }
@@ -15262,7 +15262,7 @@ class BatchedMesh extends Mesh {
           // get the bounds in world space
           this.getMatrixAt(i, _matrix$1);
           this.getBoundingSphereAt(geometryId, _sphere$2).applyMatrix4(
-            _matrix$1,
+            _matrix$1
           );
 
           // determine whether the batched geometry is within the frustum
@@ -15311,7 +15311,7 @@ class BatchedMesh extends Mesh {
             // get the bounds in world space
             this.getMatrixAt(i, _matrix$1);
             this.getBoundingSphereAt(geometryId, _sphere$2).applyMatrix4(
-              _matrix$1,
+              _matrix$1
             );
             culled = !_frustum.intersectsSphere(_sphere$2);
           }
@@ -15339,7 +15339,7 @@ class BatchedMesh extends Mesh {
     camera,
     shadowCamera,
     geometry,
-    depthMaterial /* , group */,
+    depthMaterial /* , group */
   ) {
     this.onBeforeRender(renderer, null, shadowCamera, geometry, depthMaterial);
   }
@@ -15396,7 +15396,7 @@ const _intersectPointOnSegment = /*@__PURE__*/ new Vector3();
 class Line extends Object3D {
   constructor(
     geometry = new BufferGeometry(),
-    material = new LineBasicMaterial(),
+    material = new LineBasicMaterial()
   ) {
     super();
 
@@ -15440,11 +15440,11 @@ class Line extends Object3D {
 
       geometry.setAttribute(
         "lineDistance",
-        new Float32BufferAttribute(lineDistances, 1),
+        new Float32BufferAttribute(lineDistances, 1)
       );
     } else {
       console.warn(
-        "THREE.Line.computeLineDistances(): Computation only possible with non-indexed BufferGeometry.",
+        "THREE.Line.computeLineDistances(): Computation only possible with non-indexed BufferGeometry."
       );
     }
 
@@ -15496,7 +15496,7 @@ class Line extends Object3D {
           _ray$1,
           localThresholdSq,
           a,
-          b,
+          b
         );
 
         if (intersect) {
@@ -15514,7 +15514,7 @@ class Line extends Object3D {
           _ray$1,
           localThresholdSq,
           a,
-          b,
+          b
         );
 
         if (intersect) {
@@ -15525,7 +15525,7 @@ class Line extends Object3D {
       const start = Math.max(0, drawRange.start);
       const end = Math.min(
         positionAttribute.count,
-        drawRange.start + drawRange.count,
+        drawRange.start + drawRange.count
       );
 
       for (let i = start, l = end - 1; i < l; i += step) {
@@ -15535,7 +15535,7 @@ class Line extends Object3D {
           _ray$1,
           localThresholdSq,
           i,
-          i + 1,
+          i + 1
         );
 
         if (intersect) {
@@ -15550,7 +15550,7 @@ class Line extends Object3D {
           _ray$1,
           localThresholdSq,
           end - 1,
-          start,
+          start
         );
 
         if (intersect) {
@@ -15594,7 +15594,7 @@ function checkIntersection(object, raycaster, ray, thresholdSq, a, b) {
     _vStart,
     _vEnd,
     _intersectPointOnRay,
-    _intersectPointOnSegment,
+    _intersectPointOnSegment
   );
 
   if (distSq > thresholdSq) return;
@@ -15649,11 +15649,11 @@ class LineSegments extends Line {
 
       geometry.setAttribute(
         "lineDistance",
-        new Float32BufferAttribute(lineDistances, 1),
+        new Float32BufferAttribute(lineDistances, 1)
       );
     } else {
       console.warn(
-        "THREE.LineSegments.computeLineDistances(): Computation only possible with non-indexed BufferGeometry.",
+        "THREE.LineSegments.computeLineDistances(): Computation only possible with non-indexed BufferGeometry."
       );
     }
 
@@ -15719,7 +15719,7 @@ const _position$2 = /*@__PURE__*/ new Vector3();
 class Points extends Object3D {
   constructor(
     geometry = new BufferGeometry(),
-    material = new PointsMaterial(),
+    material = new PointsMaterial()
   ) {
     super();
 
@@ -15789,14 +15789,14 @@ class Points extends Object3D {
           matrixWorld,
           raycaster,
           intersects,
-          this,
+          this
         );
       }
     } else {
       const start = Math.max(0, drawRange.start);
       const end = Math.min(
         positionAttribute.count,
-        drawRange.start + drawRange.count,
+        drawRange.start + drawRange.count
       );
 
       for (let i = start, l = end; i < l; i++) {
@@ -15809,7 +15809,7 @@ class Points extends Object3D {
           matrixWorld,
           raycaster,
           intersects,
-          this,
+          this
         );
       }
     }
@@ -15846,7 +15846,7 @@ function testPoint(
   matrixWorld,
   raycaster,
   intersects,
-  object,
+  object
 ) {
   const rayPointDistanceSq = _ray.distanceSqToPoint(point);
 
@@ -15893,7 +15893,7 @@ class VideoTexture extends Texture {
     minFilter,
     format,
     type,
-    anisotropy,
+    anisotropy
   ) {
     super(
       video,
@@ -15904,7 +15904,7 @@ class VideoTexture extends Texture {
       minFilter,
       format,
       type,
-      anisotropy,
+      anisotropy
     );
 
     this.isVideoTexture = true;
@@ -15971,7 +15971,7 @@ class CompressedTexture extends Texture {
     magFilter,
     minFilter,
     anisotropy,
-    colorSpace,
+    colorSpace
   ) {
     super(
       null,
@@ -15983,7 +15983,7 @@ class CompressedTexture extends Texture {
       format,
       type,
       anisotropy,
-      colorSpace,
+      colorSpace
     );
 
     this.isCompressedTexture = true;
@@ -16031,7 +16031,7 @@ class CompressedCubeTexture extends CompressedTexture {
       images[0].height,
       format,
       type,
-      CubeReflectionMapping,
+      CubeReflectionMapping
     );
 
     this.isCompressedCubeTexture = true;
@@ -16051,7 +16051,7 @@ class CanvasTexture extends Texture {
     minFilter,
     format,
     type,
-    anisotropy,
+    anisotropy
   ) {
     super(
       canvas,
@@ -16062,7 +16062,7 @@ class CanvasTexture extends Texture {
       minFilter,
       format,
       type,
-      anisotropy,
+      anisotropy
     );
 
     this.isCanvasTexture = true;
@@ -16082,11 +16082,11 @@ class DepthTexture extends Texture {
     magFilter,
     minFilter,
     anisotropy,
-    format = DepthFormat,
+    format = DepthFormat
   ) {
     if (format !== DepthFormat && format !== DepthStencilFormat) {
       throw new Error(
-        "DepthTexture format must be either THREE.DepthFormat or THREE.DepthStencilFormat",
+        "DepthTexture format must be either THREE.DepthFormat or THREE.DepthStencilFormat"
       );
     }
 
@@ -16103,7 +16103,7 @@ class DepthTexture extends Texture {
       minFilter,
       format,
       type,
-      anisotropy,
+      anisotropy
     );
 
     this.isDepthTexture = true;
@@ -16488,7 +16488,7 @@ class EllipseCurve extends Curve {
     aStartAngle = 0,
     aEndAngle = Math.PI * 2,
     aClockwise = false,
-    aRotation = 0,
+    aRotation = 0
   ) {
     super();
 
@@ -16701,7 +16701,7 @@ class CatmullRomCurve3 extends Curve {
     points = [],
     closed = false,
     curveType = "centripetal",
-    tension = 0.5,
+    tension = 0.5
   ) {
     super();
 
@@ -16908,7 +16908,7 @@ class CubicBezierCurve extends Curve {
     v0 = new Vector2(),
     v1 = new Vector2(),
     v2 = new Vector2(),
-    v3 = new Vector2(),
+    v3 = new Vector2()
   ) {
     super();
 
@@ -16932,7 +16932,7 @@ class CubicBezierCurve extends Curve {
 
     point.set(
       CubicBezier(t, v0.x, v1.x, v2.x, v3.x),
-      CubicBezier(t, v0.y, v1.y, v2.y, v3.y),
+      CubicBezier(t, v0.y, v1.y, v2.y, v3.y)
     );
 
     return point;
@@ -16977,7 +16977,7 @@ class CubicBezierCurve3 extends Curve {
     v0 = new Vector3(),
     v1 = new Vector3(),
     v2 = new Vector3(),
-    v3 = new Vector3(),
+    v3 = new Vector3()
   ) {
     super();
 
@@ -17002,7 +17002,7 @@ class CubicBezierCurve3 extends Curve {
     point.set(
       CubicBezier(t, v0.x, v1.x, v2.x, v3.x),
       CubicBezier(t, v0.y, v1.y, v2.y, v3.y),
-      CubicBezier(t, v0.z, v1.z, v2.z, v3.z),
+      CubicBezier(t, v0.z, v1.z, v2.z, v3.z)
     );
 
     return point;
@@ -17196,7 +17196,7 @@ class QuadraticBezierCurve extends Curve {
 
     point.set(
       QuadraticBezier(t, v0.x, v1.x, v2.x),
-      QuadraticBezier(t, v0.y, v1.y, v2.y),
+      QuadraticBezier(t, v0.y, v1.y, v2.y)
     );
 
     return point;
@@ -17256,7 +17256,7 @@ class QuadraticBezierCurve3 extends Curve {
     point.set(
       QuadraticBezier(t, v0.x, v1.x, v2.x),
       QuadraticBezier(t, v0.y, v1.y, v2.y),
-      QuadraticBezier(t, v0.z, v1.z, v2.z),
+      QuadraticBezier(t, v0.z, v1.z, v2.z)
     );
 
     return point;
@@ -17322,7 +17322,7 @@ class SplineCurve extends Curve {
 
     point.set(
       CatmullRom(weight, p0.x, p1.x, p2.x, p3.x),
-      CatmullRom(weight, p0.y, p1.y, p2.y, p3.y),
+      CatmullRom(weight, p0.y, p1.y, p2.y, p3.y)
     );
 
     return point;
@@ -17631,7 +17631,7 @@ class Path extends CurvePath {
     const curve = new QuadraticBezierCurve(
       this.currentPoint.clone(),
       new Vector2(aCPx, aCPy),
-      new Vector2(aX, aY),
+      new Vector2(aX, aY)
     );
 
     this.curves.push(curve);
@@ -17646,7 +17646,7 @@ class Path extends CurvePath {
       this.currentPoint.clone(),
       new Vector2(aCP1x, aCP1y),
       new Vector2(aCP2x, aCP2y),
-      new Vector2(aX, aY),
+      new Vector2(aX, aY)
     );
 
     this.curves.push(curve);
@@ -17684,7 +17684,7 @@ class Path extends CurvePath {
       aRadius,
       aStartAngle,
       aEndAngle,
-      aClockwise,
+      aClockwise
     );
 
     return this;
@@ -17698,7 +17698,7 @@ class Path extends CurvePath {
     aStartAngle,
     aEndAngle,
     aClockwise,
-    aRotation,
+    aRotation
   ) {
     const x0 = this.currentPoint.x;
     const y0 = this.currentPoint.y;
@@ -17711,7 +17711,7 @@ class Path extends CurvePath {
       aStartAngle,
       aEndAngle,
       aClockwise,
-      aRotation,
+      aRotation
     );
 
     return this;
@@ -17725,7 +17725,7 @@ class Path extends CurvePath {
     aStartAngle,
     aEndAngle,
     aClockwise,
-    aRotation,
+    aRotation
   ) {
     const curve = new EllipseCurve(
       aX,
@@ -17735,7 +17735,7 @@ class Path extends CurvePath {
       aStartAngle,
       aEndAngle,
       aClockwise,
-      aRotation,
+      aRotation
     );
 
     if (this.curves.length > 0) {
@@ -17785,7 +17785,7 @@ class LatheGeometry extends BufferGeometry {
     points = [new Vector2(0, -0.5), new Vector2(0.5, 0), new Vector2(0, 0.5)],
     segments = 12,
     phiStart = 0,
-    phiLength = Math.PI * 2,
+    phiLength = Math.PI * 2
   ) {
     super();
 
@@ -17943,7 +17943,7 @@ class LatheGeometry extends BufferGeometry {
       data.points,
       data.segments,
       data.phiStart,
-      data.phiLength,
+      data.phiLength
     );
   }
 }
@@ -17971,7 +17971,7 @@ class CapsuleGeometry extends LatheGeometry {
       data.radius,
       data.length,
       data.capSegments,
-      data.radialSegments,
+      data.radialSegments
     );
   }
 }
@@ -17981,7 +17981,7 @@ class CircleGeometry extends BufferGeometry {
     radius = 1,
     segments = 32,
     thetaStart = 0,
-    thetaLength = Math.PI * 2,
+    thetaLength = Math.PI * 2
   ) {
     super();
 
@@ -18063,7 +18063,7 @@ class CircleGeometry extends BufferGeometry {
       data.radius,
       data.segments,
       data.thetaStart,
-      data.thetaLength,
+      data.thetaLength
     );
   }
 }
@@ -18077,7 +18077,7 @@ class CylinderGeometry extends BufferGeometry {
     heightSegments = 1,
     openEnded = false,
     thetaStart = 0,
-    thetaLength = Math.PI * 2,
+    thetaLength = Math.PI * 2
   ) {
     super();
 
@@ -18331,7 +18331,7 @@ class CylinderGeometry extends BufferGeometry {
       data.heightSegments,
       data.openEnded,
       data.thetaStart,
-      data.thetaLength,
+      data.thetaLength
     );
   }
 }
@@ -18344,7 +18344,7 @@ class ConeGeometry extends CylinderGeometry {
     heightSegments = 1,
     openEnded = false,
     thetaStart = 0,
-    thetaLength = Math.PI * 2,
+    thetaLength = Math.PI * 2
   ) {
     super(
       0,
@@ -18354,7 +18354,7 @@ class ConeGeometry extends CylinderGeometry {
       heightSegments,
       openEnded,
       thetaStart,
-      thetaLength,
+      thetaLength
     );
 
     this.type = "ConeGeometry";
@@ -18378,7 +18378,7 @@ class ConeGeometry extends CylinderGeometry {
       data.heightSegments,
       data.openEnded,
       data.thetaStart,
-      data.thetaLength,
+      data.thetaLength
     );
   }
 }
@@ -18418,7 +18418,7 @@ class PolyhedronGeometry extends BufferGeometry {
     this.setAttribute("position", new Float32BufferAttribute(vertexBuffer, 3));
     this.setAttribute(
       "normal",
-      new Float32BufferAttribute(vertexBuffer.slice(), 3),
+      new Float32BufferAttribute(vertexBuffer.slice(), 3)
     );
     this.setAttribute("uv", new Float32BufferAttribute(uvBuffer, 2));
 
@@ -18617,7 +18617,7 @@ class PolyhedronGeometry extends BufferGeometry {
     function inclination(vector) {
       return Math.atan2(
         -vector.y,
-        Math.sqrt(vector.x * vector.x + vector.z * vector.z),
+        Math.sqrt(vector.x * vector.x + vector.z * vector.z)
       );
     }
   }
@@ -18635,7 +18635,7 @@ class PolyhedronGeometry extends BufferGeometry {
       data.vertices,
       data.indices,
       data.radius,
-      data.details,
+      data.details
     );
   }
 }
@@ -18789,13 +18789,13 @@ class EdgesGeometry extends BufferGeometry {
 
         // create hashes for the edge from the vertices
         hashes[0] = `${Math.round(a.x * precision)},${Math.round(
-          a.y * precision,
+          a.y * precision
         )},${Math.round(a.z * precision)}`;
         hashes[1] = `${Math.round(b.x * precision)},${Math.round(
-          b.y * precision,
+          b.y * precision
         )},${Math.round(b.z * precision)}`;
         hashes[2] = `${Math.round(c.x * precision)},${Math.round(
-          c.y * precision,
+          c.y * precision
         )},${Math.round(c.z * precision)}`;
 
         // skip degenerate triangles
@@ -19356,7 +19356,7 @@ function findHoleBridge(hole, outerNode) {
         hy < my ? qx : hx,
         hy,
         p.x,
-        p.y,
+        p.y
       )
     ) {
       tan = Math.abs(hy - p.y) / (hx - p.x); // tangential
@@ -19778,7 +19778,7 @@ class ExtrudeGeometry extends BufferGeometry {
       new Vector2(-0.5, -0.5),
       new Vector2(0.5, -0.5),
     ]),
-    options = {},
+    options = {}
   ) {
     super();
 
@@ -19950,7 +19950,7 @@ class ExtrudeGeometry extends BufferGeometry {
 
           const v_prev_len = Math.sqrt(v_prev_lensq);
           const v_next_len = Math.sqrt(
-            v_next_x * v_next_x + v_next_y * v_next_y,
+            v_next_x * v_next_x + v_next_y * v_next_y
           );
 
           // shift adjacent points by unit vectors to the left
@@ -20167,7 +20167,7 @@ class ExtrudeGeometry extends BufferGeometry {
               v(
                 vert.x,
                 vert.y + extrudePts[steps - 1].y,
-                extrudePts[steps - 1].x + z,
+                extrudePts[steps - 1].x + z
               );
             }
           }
@@ -20224,7 +20224,7 @@ class ExtrudeGeometry extends BufferGeometry {
             f3(
               face[0] + vlen * steps,
               face[1] + vlen * steps,
-              face[2] + vlen * steps,
+              face[2] + vlen * steps
             );
           }
         }
@@ -20292,7 +20292,7 @@ class ExtrudeGeometry extends BufferGeometry {
           verticesArray,
           nextIndex - 3,
           nextIndex - 2,
-          nextIndex - 1,
+          nextIndex - 1
         );
 
         addUV(uvs[0]);
@@ -20316,7 +20316,7 @@ class ExtrudeGeometry extends BufferGeometry {
           nextIndex - 6,
           nextIndex - 3,
           nextIndex - 2,
-          nextIndex - 1,
+          nextIndex - 1
         );
 
         addUV(uvs[0]);
@@ -20371,7 +20371,7 @@ class ExtrudeGeometry extends BufferGeometry {
 
     if (extrudePath !== undefined) {
       data.options.extrudePath = new Curves[extrudePath.type]().fromJSON(
-        extrudePath,
+        extrudePath
       );
     }
 
@@ -20401,7 +20401,7 @@ const WorldUVGenerator = {
     indexA,
     indexB,
     indexC,
-    indexD,
+    indexD
   ) {
     const a_x = vertices[indexA * 3];
     const a_y = vertices[indexA * 3 + 1];
@@ -20620,7 +20620,7 @@ class PlaneGeometry extends BufferGeometry {
       data.width,
       data.height,
       data.widthSegments,
-      data.heightSegments,
+      data.heightSegments
     );
   }
 }
@@ -20632,7 +20632,7 @@ class RingGeometry extends BufferGeometry {
     thetaSegments = 32,
     phiSegments = 1,
     thetaStart = 0,
-    thetaLength = Math.PI * 2,
+    thetaLength = Math.PI * 2
   ) {
     super();
 
@@ -20739,7 +20739,7 @@ class RingGeometry extends BufferGeometry {
       data.thetaSegments,
       data.phiSegments,
       data.thetaStart,
-      data.thetaLength,
+      data.thetaLength
     );
   }
 }
@@ -20751,7 +20751,7 @@ class ShapeGeometry extends BufferGeometry {
       new Vector2(-0.5, -0.5),
       new Vector2(0.5, -0.5),
     ]),
-    curveSegments = 12,
+    curveSegments = 12
   ) {
     super();
 
@@ -20906,7 +20906,7 @@ class SphereGeometry extends BufferGeometry {
     phiStart = 0,
     phiLength = Math.PI * 2,
     thetaStart = 0,
-    thetaLength = Math.PI,
+    thetaLength = Math.PI
   ) {
     super();
 
@@ -21028,7 +21028,7 @@ class SphereGeometry extends BufferGeometry {
       data.phiStart,
       data.phiLength,
       data.thetaStart,
-      data.thetaLength,
+      data.thetaLength
     );
   }
 }
@@ -21060,7 +21060,7 @@ class TorusGeometry extends BufferGeometry {
     tube = 0.4,
     radialSegments = 12,
     tubularSegments = 48,
-    arc = Math.PI * 2,
+    arc = Math.PI * 2
   ) {
     super();
 
@@ -21160,7 +21160,7 @@ class TorusGeometry extends BufferGeometry {
       data.tube,
       data.radialSegments,
       data.tubularSegments,
-      data.arc,
+      data.arc
     );
   }
 }
@@ -21172,7 +21172,7 @@ class TorusKnotGeometry extends BufferGeometry {
     tubularSegments = 64,
     radialSegments = 8,
     p = 2,
-    q = 3,
+    q = 3
   ) {
     super();
 
@@ -21318,7 +21318,7 @@ class TorusKnotGeometry extends BufferGeometry {
       data.tubularSegments,
       data.radialSegments,
       data.p,
-      data.q,
+      data.q
     );
   }
 }
@@ -21328,12 +21328,12 @@ class TubeGeometry extends BufferGeometry {
     path = new QuadraticBezierCurve3(
       new Vector3(-1, -1, 0),
       new Vector3(-1, 1, 0),
-      new Vector3(1, 1, 0),
+      new Vector3(1, 1, 0)
     ),
     tubularSegments = 64,
     radius = 1,
     radialSegments = 8,
-    closed = false,
+    closed = false
   ) {
     super();
 
@@ -21493,7 +21493,7 @@ class TubeGeometry extends BufferGeometry {
       data.tubularSegments,
       data.radius,
       data.radialSegments,
-      data.closed,
+      data.closed
     );
   }
 }
@@ -22662,7 +22662,7 @@ function makeClipAdditive(
   targetClip,
   referenceFrame = 0,
   referenceClip = targetClip,
-  fps = 30,
+  fps = 30
 ) {
   if (fps <= 0) fps = 30;
 
@@ -22752,7 +22752,7 @@ function makeClipAdditive(
           referenceValue,
           0,
           targetTrack.values,
-          valueStart,
+          valueStart
         );
       } else {
         const valueEnd = targetValueSize - targetOffset * 2;
@@ -23136,7 +23136,7 @@ class KeyframeTrack {
       throw new Error("THREE.KeyframeTrack: track name is undefined");
     if (times === undefined || times.length === 0)
       throw new Error(
-        "THREE.KeyframeTrack: no keyframes in track named " + name,
+        "THREE.KeyframeTrack: no keyframes in track named " + name
       );
 
     this.name = name;
@@ -23183,7 +23183,7 @@ class KeyframeTrack {
       this.times,
       this.values,
       this.getValueSize(),
-      result,
+      result
     );
   }
 
@@ -23192,7 +23192,7 @@ class KeyframeTrack {
       this.times,
       this.values,
       this.getValueSize(),
-      result,
+      result
     );
   }
 
@@ -23201,7 +23201,7 @@ class KeyframeTrack {
       this.times,
       this.values,
       this.getValueSize(),
-      result,
+      result
     );
   }
 
@@ -23356,7 +23356,7 @@ class KeyframeTrack {
           "THREE.KeyframeTrack: Time is not a valid number.",
           this,
           i,
-          currTime,
+          currTime
         );
         valid = false;
         break;
@@ -23368,7 +23368,7 @@ class KeyframeTrack {
           this,
           i,
           currTime,
-          prevTime,
+          prevTime
         );
         valid = false;
         break;
@@ -23387,7 +23387,7 @@ class KeyframeTrack {
               "THREE.KeyframeTrack: Value is not a valid number.",
               this,
               i,
-              value,
+              value
             );
             valid = false;
             break;
@@ -23563,7 +23563,7 @@ class QuaternionLinearInterpolant extends Interpolant {
         offset - stride,
         values,
         offset,
-        alpha,
+        alpha
       );
     }
 
@@ -23580,7 +23580,7 @@ class QuaternionKeyframeTrack extends KeyframeTrack {
       this.times,
       this.values,
       this.getValueSize(),
-      result,
+      result
     );
   }
 }
@@ -23618,7 +23618,7 @@ class AnimationClip {
     name = "",
     duration = -1,
     tracks = [],
-    blendMode = NormalAnimationBlendMode,
+    blendMode = NormalAnimationBlendMode
   ) {
     this.name = name;
     this.tracks = tracks;
@@ -23678,7 +23678,7 @@ class AnimationClip {
       times.push(
         (i + numMorphTargets - 1) % numMorphTargets,
         i,
-        (i + 1) % numMorphTargets,
+        (i + 1) % numMorphTargets
       );
 
       values.push(0, 1, 0);
@@ -23698,8 +23698,8 @@ class AnimationClip {
         new NumberKeyframeTrack(
           ".morphTargetInfluences[" + morphTargetSequence[i].name + "]",
           times,
-          values,
-        ).scale(1.0 / fps),
+          values
+        ).scale(1.0 / fps)
       );
     }
 
@@ -23757,8 +23757,8 @@ class AnimationClip {
           name,
           animationToMorphTargets[name],
           fps,
-          noLoop,
-        ),
+          noLoop
+        )
       );
     }
 
@@ -23777,7 +23777,7 @@ class AnimationClip {
       trackName,
       animationKeys,
       propertyName,
-      destTracks,
+      destTracks
     ) {
       // only return track if there are actually keys.
       if (animationKeys.length !== 0) {
@@ -23843,8 +23843,8 @@ class AnimationClip {
             new NumberKeyframeTrack(
               ".morphTargetInfluence[" + morphTargetName + "]",
               times,
-              values,
-            ),
+              values
+            )
           );
         }
 
@@ -23859,7 +23859,7 @@ class AnimationClip {
           boneName + ".position",
           animationKeys,
           "pos",
-          tracks,
+          tracks
         );
 
         addNonemptyTrack(
@@ -23867,7 +23867,7 @@ class AnimationClip {
           boneName + ".quaternion",
           animationKeys,
           "rot",
-          tracks,
+          tracks
         );
 
         addNonemptyTrack(
@@ -23875,7 +23875,7 @@ class AnimationClip {
           boneName + ".scale",
           animationKeys,
           "scl",
-          tracks,
+          tracks
         );
       }
     }
@@ -23941,7 +23941,7 @@ class AnimationClip {
       this.name,
       this.duration,
       tracks,
-      this.blendMode,
+      this.blendMode
     );
   }
 
@@ -24008,7 +24008,7 @@ function parseKeyframeTrack(json) {
       json.name,
       json.times,
       json.values,
-      json.interpolation,
+      json.interpolation
     );
   }
 }
@@ -24324,7 +24324,7 @@ class FileLoader extends Loader {
                   },
                   (e) => {
                     controller.error(e);
-                  },
+                  }
                 );
               }
             },
@@ -24334,7 +24334,7 @@ class FileLoader extends Loader {
         } else {
           throw new HttpError(
             `fetch for "${response.url}" responded with ${response.status}: ${response.statusText}`,
-            response,
+            response
           );
         }
       })
@@ -24447,7 +24447,7 @@ class AnimationLoader extends Loader {
         }
       },
       onProgress,
-      onError,
+      onError
     );
   }
 
@@ -24516,7 +24516,7 @@ class CompressedTextureLoader extends Loader {
           }
         },
         onProgress,
-        onError,
+        onError
       );
     }
 
@@ -24540,7 +24540,7 @@ class CompressedTextureLoader extends Loader {
 
               for (let i = 0; i < texDatas.mipmapCount; i++) {
                 images[f].mipmaps.push(
-                  texDatas.mipmaps[f * texDatas.mipmapCount + i],
+                  texDatas.mipmaps[f * texDatas.mipmapCount + i]
                 );
                 images[f].format = texDatas.format;
                 images[f].width = texDatas.width;
@@ -24565,7 +24565,7 @@ class CompressedTextureLoader extends Loader {
           if (onLoad) onLoad(texture);
         },
         onProgress,
-        onError,
+        onError
       );
     }
 
@@ -24670,7 +24670,7 @@ class CubeTextureLoader extends Loader {
           }
         },
         undefined,
-        onError,
+        onError
       );
     }
 
@@ -24774,7 +24774,7 @@ class DataTextureLoader extends Loader {
         if (onLoad) onLoad(texture, texData);
       },
       onProgress,
-      onError,
+      onError
     );
 
     return texture;
@@ -24804,7 +24804,7 @@ class TextureLoader extends Loader {
         }
       },
       onProgress,
-      onError,
+      onError
     );
 
     return texture;
@@ -24933,7 +24933,7 @@ class LightShadow {
 
     _projScreenMatrix$1.multiplyMatrices(
       shadowCamera.projectionMatrix,
-      shadowCamera.matrixWorldInverse,
+      shadowCamera.matrixWorldInverse
     );
     this._frustum.setFromProjectionMatrix(_projScreenMatrix$1);
 
@@ -24953,7 +24953,7 @@ class LightShadow {
       0.0,
       0.0,
       0.0,
-      1.0,
+      1.0
     );
 
     shadowMatrix.multiply(_projScreenMatrix$1);
@@ -25053,7 +25053,7 @@ class SpotLight extends Light {
     distance = 0,
     angle = Math.PI / 3,
     penumbra = 0,
-    decay = 0,
+    decay = 0
   ) {
     super(color, intensity);
 
@@ -25192,12 +25192,12 @@ class PointLightShadow extends LightShadow {
     shadowMatrix.makeTranslation(
       -_lightPositionWorld.x,
       -_lightPositionWorld.y,
-      -_lightPositionWorld.z,
+      -_lightPositionWorld.z
     );
 
     _projScreenMatrix.multiplyMatrices(
       camera.projectionMatrix,
-      camera.matrixWorldInverse,
+      camera.matrixWorldInverse
     );
     this._frustum.setFromProjectionMatrix(_projScreenMatrix);
   }
@@ -25251,7 +25251,7 @@ class OrthographicCamera extends Camera {
     top = 1,
     bottom = -1,
     near = 0.1,
-    far = 2000,
+    far = 2000
   ) {
     super();
 
@@ -25350,7 +25350,7 @@ class OrthographicCamera extends Camera {
       bottom,
       this.near,
       this.far,
-      this.coordinateSystem,
+      this.coordinateSystem
     );
 
     this.projectionMatrixInverse.copy(this.projectionMatrix).invert();
@@ -25716,7 +25716,7 @@ class MaterialLoader extends Loader {
         }
       },
       onProgress,
-      onError,
+      onError
     );
   }
 
@@ -25883,31 +25883,31 @@ class MaterialLoader extends Loader {
 
           case "v2":
             material.uniforms[name].value = new Vector2().fromArray(
-              uniform.value,
+              uniform.value
             );
             break;
 
           case "v3":
             material.uniforms[name].value = new Vector3().fromArray(
-              uniform.value,
+              uniform.value
             );
             break;
 
           case "v4":
             material.uniforms[name].value = new Vector4().fromArray(
-              uniform.value,
+              uniform.value
             );
             break;
 
           case "m3":
             material.uniforms[name].value = new Matrix3().fromArray(
-              uniform.value,
+              uniform.value
             );
             break;
 
           case "m4":
             material.uniforms[name].value = new Matrix4().fromArray(
-              uniform.value,
+              uniform.value
             );
             break;
 
@@ -26021,14 +26021,14 @@ class MaterialLoader extends Loader {
       material.clearcoatNormalMap = getTexture(json.clearcoatNormalMap);
     if (json.clearcoatNormalScale !== undefined)
       material.clearcoatNormalScale = new Vector2().fromArray(
-        json.clearcoatNormalScale,
+        json.clearcoatNormalScale
       );
 
     if (json.iridescenceMap !== undefined)
       material.iridescenceMap = getTexture(json.iridescenceMap);
     if (json.iridescenceThicknessMap !== undefined)
       material.iridescenceThicknessMap = getTexture(
-        json.iridescenceThicknessMap,
+        json.iridescenceThicknessMap
       );
 
     if (json.transmissionMap !== undefined)
@@ -26087,7 +26087,7 @@ class LoaderUtils {
     // @deprecated, r165
 
     console.warn(
-      "THREE.LoaderUtils: decodeText() has been deprecated with r165 and will be removed with r175. Use TextDecoder instead.",
+      "THREE.LoaderUtils: decodeText() has been deprecated with r165 and will be removed with r175. Use TextDecoder instead."
     );
 
     if (typeof TextDecoder !== "undefined") {
@@ -26203,7 +26203,7 @@ class BufferGeometryLoader extends Loader {
         }
       },
       onProgress,
-      onError,
+      onError
     );
   }
 
@@ -26262,13 +26262,13 @@ class BufferGeometryLoader extends Loader {
       if (attribute.isInterleavedBufferAttribute) {
         const interleavedBuffer = getInterleavedBuffer(
           json.data,
-          attribute.data,
+          attribute.data
         );
         bufferAttribute = new InterleavedBufferAttribute(
           interleavedBuffer,
           attribute.itemSize,
           attribute.offset,
-          attribute.normalized,
+          attribute.normalized
         );
       } else {
         const typedArray = getTypedArray(attribute.type, attribute.array);
@@ -26278,7 +26278,7 @@ class BufferGeometryLoader extends Loader {
         bufferAttribute = new bufferAttributeConstr(
           typedArray,
           attribute.itemSize,
-          attribute.normalized,
+          attribute.normalized
         );
       }
 
@@ -26304,20 +26304,20 @@ class BufferGeometryLoader extends Loader {
           if (attribute.isInterleavedBufferAttribute) {
             const interleavedBuffer = getInterleavedBuffer(
               json.data,
-              attribute.data,
+              attribute.data
             );
             bufferAttribute = new InterleavedBufferAttribute(
               interleavedBuffer,
               attribute.itemSize,
               attribute.offset,
-              attribute.normalized,
+              attribute.normalized
             );
           } else {
             const typedArray = getTypedArray(attribute.type, attribute.array);
             bufferAttribute = new BufferAttribute(
               typedArray,
               attribute.itemSize,
-              attribute.normalized,
+              attribute.normalized
             );
           }
 
@@ -26392,7 +26392,7 @@ class ObjectLoader extends Loader {
 
           console.error(
             "THREE:ObjectLoader: Can't parse " + url + ".",
-            error.message,
+            error.message
           );
 
           return;
@@ -26415,7 +26415,7 @@ class ObjectLoader extends Loader {
         scope.parse(json, onLoad);
       },
       onProgress,
-      onError,
+      onError
     );
   }
 
@@ -26464,7 +26464,7 @@ class ObjectLoader extends Loader {
       geometries,
       materials,
       textures,
-      animations,
+      animations
     );
     const skeletons = this.parseSkeletons(json.skeletons, object);
 
@@ -26504,7 +26504,7 @@ class ObjectLoader extends Loader {
       geometries,
       materials,
       textures,
-      animations,
+      animations
     );
     const skeletons = this.parseSkeletons(json.skeletons, object);
 
@@ -26572,7 +26572,7 @@ class ObjectLoader extends Loader {
               geometry = Geometries[data.type].fromJSON(data, shapes);
             } else {
               console.warn(
-                `THREE.ObjectLoader: Unsupported geometry type "${data.type}"`,
+                `THREE.ObjectLoader: Unsupported geometry type "${data.type}"`
               );
             }
         }
@@ -26645,7 +26645,7 @@ class ObjectLoader extends Loader {
         function () {
           scope.manager.itemError(url);
           scope.manager.itemEnd(url);
-        },
+        }
       );
     }
 
@@ -26701,8 +26701,8 @@ class ObjectLoader extends Loader {
                   new DataTexture(
                     deserializedImage.data,
                     deserializedImage.width,
-                    deserializedImage.height,
-                  ),
+                    deserializedImage.height
+                  )
                 );
               }
             }
@@ -26777,8 +26777,8 @@ class ObjectLoader extends Loader {
                   new DataTexture(
                     deserializedImage.data,
                     deserializedImage.width,
-                    deserializedImage.height,
-                  ),
+                    deserializedImage.height
+                  )
                 );
               }
             }
@@ -26803,7 +26803,7 @@ class ObjectLoader extends Loader {
 
       console.warn(
         "THREE.ObjectLoader.parseTexture: Constant should be in numeric form.",
-        value,
+        value
       );
 
       return type[value];
@@ -26818,7 +26818,7 @@ class ObjectLoader extends Loader {
         if (data.image === undefined) {
           console.warn(
             'THREE.ObjectLoader: No "image" specified for',
-            data.uuid,
+            data.uuid
           );
         }
 
@@ -26991,7 +26991,7 @@ class ObjectLoader extends Loader {
           data.fov,
           data.aspect,
           data.near,
-          data.far,
+          data.far
         );
 
         if (data.focus !== undefined) object.focus = data.focus;
@@ -27009,7 +27009,7 @@ class ObjectLoader extends Loader {
           data.top,
           data.bottom,
           data.near,
-          data.far,
+          data.far
         );
 
         if (data.zoom !== undefined) object.zoom = data.zoom;
@@ -27033,7 +27033,7 @@ class ObjectLoader extends Loader {
           data.color,
           data.intensity,
           data.distance,
-          data.decay,
+          data.decay
         );
 
         break;
@@ -27043,7 +27043,7 @@ class ObjectLoader extends Loader {
           data.color,
           data.intensity,
           data.width,
-          data.height,
+          data.height
         );
 
         break;
@@ -27055,7 +27055,7 @@ class ObjectLoader extends Loader {
           data.distance,
           data.angle,
           data.penumbra,
-          data.decay,
+          data.decay
         );
         object.target = data.target || "";
 
@@ -27065,7 +27065,7 @@ class ObjectLoader extends Loader {
         object = new HemisphereLight(
           data.color,
           data.groundColor,
-          data.intensity,
+          data.intensity
         );
 
         break;
@@ -27106,12 +27106,12 @@ class ObjectLoader extends Loader {
         object = new InstancedMesh(geometry, material, count);
         object.instanceMatrix = new InstancedBufferAttribute(
           new Float32Array(instanceMatrix.array),
-          16,
+          16
         );
         if (instanceColor !== undefined)
           object.instanceColor = new InstancedBufferAttribute(
             new Float32Array(instanceColor.array),
-            instanceColor.itemSize,
+            instanceColor.itemSize
           );
 
         break;
@@ -27124,7 +27124,7 @@ class ObjectLoader extends Loader {
           data.maxInstanceCount,
           data.maxVertexCount,
           data.maxIndexCount,
-          material,
+          material
         );
         object.geometry = geometry;
         object.perObjectFrustumCulled = data.perObjectFrustumCulled;
@@ -27174,7 +27174,7 @@ class ObjectLoader extends Loader {
       case "Line":
         object = new Line(
           getGeometry(data.geometry),
-          getMaterial(data.material),
+          getMaterial(data.material)
         );
 
         break;
@@ -27182,7 +27182,7 @@ class ObjectLoader extends Loader {
       case "LineLoop":
         object = new LineLoop(
           getGeometry(data.geometry),
-          getMaterial(data.material),
+          getMaterial(data.material)
         );
 
         break;
@@ -27190,7 +27190,7 @@ class ObjectLoader extends Loader {
       case "LineSegments":
         object = new LineSegments(
           getGeometry(data.geometry),
-          getMaterial(data.material),
+          getMaterial(data.material)
         );
 
         break;
@@ -27199,7 +27199,7 @@ class ObjectLoader extends Loader {
       case "Points":
         object = new Points(
           getGeometry(data.geometry),
-          getMaterial(data.material),
+          getMaterial(data.material)
         );
 
         break;
@@ -27236,7 +27236,7 @@ class ObjectLoader extends Loader {
         object.matrix.decompose(
           object.position,
           object.quaternion,
-          object.scale,
+          object.scale
         );
     } else {
       if (data.position !== undefined) object.position.fromArray(data.position);
@@ -27283,8 +27283,8 @@ class ObjectLoader extends Loader {
             geometries,
             materials,
             textures,
-            animations,
-          ),
+            animations
+          )
         );
       }
     }
@@ -27327,7 +27327,7 @@ class ObjectLoader extends Loader {
         if (skeleton === undefined) {
           console.warn(
             "THREE.ObjectLoader: No skeleton found with UUID:",
-            child.skeleton,
+            child.skeleton
           );
         } else {
           child.bind(skeleton, child.bindMatrix);
@@ -27385,7 +27385,7 @@ class ImageBitmapLoader extends Loader {
 
     if (typeof createImageBitmap === "undefined") {
       console.warn(
-        "THREE.ImageBitmapLoader: createImageBitmap() not supported.",
+        "THREE.ImageBitmapLoader: createImageBitmap() not supported."
       );
     }
 
@@ -27452,7 +27452,7 @@ class ImageBitmapLoader extends Loader {
       .then(function (blob) {
         return createImageBitmap(
           blob,
-          Object.assign(scope.options, { colorSpaceConversion: "none" }),
+          Object.assign(scope.options, { colorSpaceConversion: "none" })
         );
       })
       .then(function (imageBitmap) {
@@ -27526,7 +27526,7 @@ class AudioLoader extends Loader {
         }
       },
       onProgress,
-      onError,
+      onError
     );
 
     function handleError(e) {
@@ -27802,7 +27802,7 @@ class AudioListener extends Object3D {
         _orientation$1.z,
         up.x,
         up.y,
-        up.z,
+        up.z
       );
     }
   }
@@ -28025,7 +28025,7 @@ class Audio extends Object3D {
       this.source.detune.setTargetAtTime(
         this.detune,
         this.context.currentTime,
-        0.01,
+        0.01
       );
     }
 
@@ -28056,7 +28056,7 @@ class Audio extends Object3D {
       this.source.playbackRate.setTargetAtTime(
         this.playbackRate,
         this.context.currentTime,
-        0.01,
+        0.01
       );
     }
 
@@ -28422,7 +28422,7 @@ class PropertyMixer {
         offset,
         originalValueOffset,
         1 - weight,
-        stride,
+        stride
       );
     }
 
@@ -28434,7 +28434,7 @@ class PropertyMixer {
         offset,
         this._addIndex * stride,
         1,
-        stride,
+        stride
       );
     }
 
@@ -28517,7 +28517,7 @@ class PropertyMixer {
       dstOffset,
       buffer,
       srcOffset,
-      t,
+      t
     );
   }
 
@@ -28531,7 +28531,7 @@ class PropertyMixer {
       buffer,
       dstOffset,
       buffer,
-      srcOffset,
+      srcOffset
     );
 
     // Slerp to the intermediate result
@@ -28542,7 +28542,7 @@ class PropertyMixer {
       dstOffset,
       buffer,
       workOffset,
-      t,
+      t
     );
   }
 
@@ -28579,7 +28579,7 @@ const _wordCharOrDot = "[^" + _RESERVED_CHARS_RE.replace("\\.", "") + "]";
 // be matched to parse the rest of the track name.
 const _directoryRe = /*@__PURE__*/ /((?:WC+[\/:])*)/.source.replace(
   "WC",
-  _wordChar,
+  _wordChar
 );
 
 // Target node. May contain word characters (a-zA-Z0-9_) and '.' or '-'.
@@ -28589,18 +28589,18 @@ const _nodeRe = /*@__PURE__*/ /(WCOD+)?/.source.replace("WCOD", _wordCharOrDot);
 // characters. Accessor may contain any character except closing bracket.
 const _objectRe = /*@__PURE__*/ /(?:\.(WC+)(?:\[(.+)\])?)?/.source.replace(
   "WC",
-  _wordChar,
+  _wordChar
 );
 
 // Property and accessor. May not contain reserved characters. Accessor may
 // contain any non-bracket characters.
 const _propertyRe = /*@__PURE__*/ /\.(WC+)(?:\[(.+)\])?/.source.replace(
   "WC",
-  _wordChar,
+  _wordChar
 );
 
 const _trackRe = new RegExp(
-  "" + "^" + _directoryRe + _nodeRe + _objectRe + _propertyRe + "$",
+  "" + "^" + _directoryRe + _nodeRe + _objectRe + _propertyRe + "$"
 );
 
 const _supportedObjectNames = ["material", "materials", "bones", "map"];
@@ -28733,7 +28733,7 @@ class PropertyBinding {
     if (results.propertyName === null || results.propertyName.length === 0) {
       throw new Error(
         "PropertyBinding: can not parse propertyName from trackName: " +
-          trackName,
+          trackName
       );
     }
 
@@ -28915,7 +28915,7 @@ class PropertyBinding {
     if (!targetObject) {
       targetObject = PropertyBinding.findNode(
         this.rootNode,
-        parsedPath.nodeName,
+        parsedPath.nodeName
       );
 
       this.node = targetObject;
@@ -28930,7 +28930,7 @@ class PropertyBinding {
       console.warn(
         "THREE.PropertyBinding: No target node found for track: " +
           this.path +
-          ".",
+          "."
       );
       return;
     }
@@ -28944,7 +28944,7 @@ class PropertyBinding {
           if (!targetObject.material) {
             console.error(
               "THREE.PropertyBinding: Can not bind to material as node does not have a material.",
-              this,
+              this
             );
             return;
           }
@@ -28952,7 +28952,7 @@ class PropertyBinding {
           if (!targetObject.material.materials) {
             console.error(
               "THREE.PropertyBinding: Can not bind to material.materials as node.material does not have a materials array.",
-              this,
+              this
             );
             return;
           }
@@ -28965,7 +28965,7 @@ class PropertyBinding {
           if (!targetObject.skeleton) {
             console.error(
               "THREE.PropertyBinding: Can not bind to bones as node does not have a skeleton.",
-              this,
+              this
             );
             return;
           }
@@ -28994,7 +28994,7 @@ class PropertyBinding {
           if (!targetObject.material) {
             console.error(
               "THREE.PropertyBinding: Can not bind to material as node does not have a material.",
-              this,
+              this
             );
             return;
           }
@@ -29002,7 +29002,7 @@ class PropertyBinding {
           if (!targetObject.material.map) {
             console.error(
               "THREE.PropertyBinding: Can not bind to material.map as node.material does not have a map.",
-              this,
+              this
             );
             return;
           }
@@ -29014,7 +29014,7 @@ class PropertyBinding {
           if (targetObject[objectName] === undefined) {
             console.error(
               "THREE.PropertyBinding: Can not bind to objectName of node undefined.",
-              this,
+              this
             );
             return;
           }
@@ -29027,7 +29027,7 @@ class PropertyBinding {
           console.error(
             "THREE.PropertyBinding: Trying to bind to objectIndex of objectName, but is undefined.",
             this,
-            targetObject,
+            targetObject
           );
           return;
         }
@@ -29048,7 +29048,7 @@ class PropertyBinding {
           "." +
           propertyName +
           " but it wasn't found.",
-        targetObject,
+        targetObject
       );
       return;
     }
@@ -29077,7 +29077,7 @@ class PropertyBinding {
         if (!targetObject.geometry) {
           console.error(
             "THREE.PropertyBinding: Can not bind to morphTargetInfluences because node does not have a geometry.",
-            this,
+            this
           );
           return;
         }
@@ -29085,7 +29085,7 @@ class PropertyBinding {
         if (!targetObject.geometry.morphAttributes) {
           console.error(
             "THREE.PropertyBinding: Can not bind to morphTargetInfluences because node does not have a geometry.morphAttributes.",
-            this,
+            this
           );
           return;
         }
@@ -29280,7 +29280,7 @@ class AnimationObjectGroup {
 
         for (let j = 0, m = nBindings; j !== m; ++j) {
           bindings[j].push(
-            new PropertyBinding(object, paths[j], parsedPaths[j]),
+            new PropertyBinding(object, paths[j], parsedPaths[j])
           );
         }
       } else if (index < nCachedObjects) {
@@ -29320,7 +29320,7 @@ class AnimationObjectGroup {
       } else if (objects[index] !== knownObject) {
         console.error(
           "THREE.AnimationObjectGroup: Different objects with the same UUID " +
-            "detected. Clean the caches or recreate your infrastructure when reloading scenes.",
+            "detected. Clean the caches or recreate your infrastructure when reloading scenes."
         );
       } // else the object is already where we want it to be
     } // for arguments
@@ -30115,7 +30115,7 @@ class AnimationMixer extends EventDispatcher {
         binding = new PropertyMixer(
           PropertyBinding.create(root, trackName, path),
           track.ValueTypeName,
-          track.getValueSize(),
+          track.getValueSize()
         );
 
         ++binding.referenceCount;
@@ -30140,7 +30140,7 @@ class AnimationMixer extends EventDispatcher {
 
         this._bindAction(
           action,
-          actionsForClip && actionsForClip.knownActions[0],
+          actionsForClip && actionsForClip.knownActions[0]
         );
 
         this._addInactiveAction(action, clipUuid, rootUuid);
@@ -30431,7 +30431,7 @@ class AnimationMixer extends EventDispatcher {
         new Float32Array(2),
         new Float32Array(2),
         1,
-        _controlInterpolantsResultBuffer,
+        _controlInterpolantsResultBuffer
       );
 
       interpolant.__cacheIndex = lastActiveIndex;
@@ -30503,7 +30503,7 @@ class AnimationMixer extends EventDispatcher {
       this,
       clipObject,
       optionalRoot,
-      blendMode,
+      blendMode
     );
 
     this._bindAction(newAction, prototypeAction);
@@ -30668,7 +30668,7 @@ class Uniform {
 
   clone() {
     return new Uniform(
-      this.value.clone === undefined ? this.value : this.value.clone(),
+      this.value.clone === undefined ? this.value : this.value.clone()
     );
   }
 }
@@ -30868,7 +30868,7 @@ class Raycaster {
         .set(
           coords.x,
           coords.y,
-          (camera.near + camera.far) / (camera.near - camera.far),
+          (camera.near + camera.far) / (camera.near - camera.far)
         )
         .unproject(camera); // set origin in plane of camera
       this.ray.direction.set(0, 0, -1).transformDirection(camera.matrixWorld);
@@ -31078,7 +31078,7 @@ const _vector$4 = /*@__PURE__*/ new Vector2();
 class Box2 {
   constructor(
     min = new Vector2(+Infinity, +Infinity),
-    max = new Vector2(-Infinity, -Infinity),
+    max = new Vector2(-Infinity, -Infinity)
   ) {
     this.isBox2 = true;
 
@@ -31192,7 +31192,7 @@ class Box2 {
 
     return target.set(
       (point.x - this.min.x) / (this.max.x - this.min.x),
-      (point.y - this.min.y) / (this.max.y - this.min.y),
+      (point.y - this.min.y) / (this.max.y - this.min.y)
     );
   }
 
@@ -31355,7 +31355,7 @@ class SpotLightHelper extends Object3D {
         1,
         Math.cos(p2),
         Math.sin(p2),
-        1,
+        1
       );
     }
 
@@ -31651,7 +31651,7 @@ class HemisphereLightHelper extends Object3D {
     this.light.updateWorldMatrix(true, false);
 
     mesh.lookAt(
-      _vector$1.setFromMatrixPosition(this.light.matrixWorld).negate(),
+      _vector$1.setFromMatrixPosition(this.light.matrixWorld).negate()
     );
   }
 }
@@ -31711,7 +31711,7 @@ class PolarGridHelper extends LineSegments {
     rings = 8,
     divisions = 64,
     color1 = 0x444444,
-    color2 = 0x888888,
+    color2 = 0x888888
   ) {
     color1 = new Color(color1);
     color2 = new Color(color2);
@@ -31828,8 +31828,8 @@ class DirectionalLightHelper extends Object3D {
           size,
           0,
         ],
-        3,
-      ),
+        3
+      )
     );
 
     const material = new LineBasicMaterial({ fog: false, toneMapped: false });
@@ -31840,7 +31840,7 @@ class DirectionalLightHelper extends Object3D {
     geometry = new BufferGeometry();
     geometry.setAttribute(
       "position",
-      new Float32BufferAttribute([0, 0, 0, 0, 0, 1], 3),
+      new Float32BufferAttribute([0, 0, 0, 0, 0, 1], 3)
     );
 
     this.targetLine = new Line(geometry, material);
@@ -32331,7 +32331,7 @@ class PlaneHelper extends Line {
     const geometry2 = new BufferGeometry();
     geometry2.setAttribute(
       "position",
-      new Float32BufferAttribute(positions2, 3),
+      new Float32BufferAttribute(positions2, 3)
     );
     geometry2.computeBoundingSphere();
 
@@ -32344,8 +32344,8 @@ class PlaneHelper extends Line {
           transparent: true,
           depthWrite: false,
           toneMapped: false,
-        }),
-      ),
+        })
+      )
     );
   }
 
@@ -32381,7 +32381,7 @@ class ArrowHelper extends Object3D {
     length = 1,
     color = 0xffff00,
     headLength = length * 0.2,
-    headWidth = headLength * 0.2,
+    headWidth = headLength * 0.2
   ) {
     super();
 
@@ -32391,7 +32391,7 @@ class ArrowHelper extends Object3D {
       _lineGeometry = new BufferGeometry();
       _lineGeometry.setAttribute(
         "position",
-        new Float32BufferAttribute([0, 0, 0, 0, 1, 0], 3),
+        new Float32BufferAttribute([0, 0, 0, 0, 1, 0], 3)
       );
 
       _coneGeometry = new CylinderGeometry(0, 0.5, 1, 5, 1);
@@ -32402,14 +32402,14 @@ class ArrowHelper extends Object3D {
 
     this.line = new Line(
       _lineGeometry,
-      new LineBasicMaterial({ color: color, toneMapped: false }),
+      new LineBasicMaterial({ color: color, toneMapped: false })
     );
     this.line.matrixAutoUpdate = false;
     this.add(this.line);
 
     this.cone = new Mesh(
       _coneGeometry,
-      new MeshBasicMaterial({ color: color, toneMapped: false }),
+      new MeshBasicMaterial({ color: color, toneMapped: false })
     );
     this.cone.matrixAutoUpdate = false;
     this.add(this.cone);
@@ -32963,7 +32963,7 @@ function getByteLength(width, height, format, type) {
   }
 
   throw new Error(
-    `Unable to determine texture byte length for ${format} format.`,
+    `Unable to determine texture byte length for ${format} format.`
   );
 }
 
@@ -33003,7 +33003,7 @@ if (typeof __THREE_DEVTOOLS__ !== "undefined") {
       detail: {
         revision: REVISION,
       },
-    }),
+    })
   );
 }
 

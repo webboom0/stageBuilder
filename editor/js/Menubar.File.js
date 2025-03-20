@@ -7,43 +7,106 @@ function MenubarFile(editor) {
   const saveString = editor.utils.saveString;
 
   const container = new UIPanel();
-  container.setClass("menu");
-
-  const title = new UIPanel();
-  title.setClass("title");
-  title.setTextContent(strings.getKey("menubar/file"));
-  container.add(title);
+  container.setClass("menu file-menu");
 
   const options = new UIPanel();
-  options.setClass("options");
+  options.setClass("options horizontal-options");
   container.add(options);
 
-  // New Project
-
-  const newProjectSubmenuTitle = new UIRow()
-    .setTextContent(strings.getKey("menubar/file/new"))
-    .addClass("option")
-    .addClass("submenu-title");
-  newProjectSubmenuTitle.onMouseOver(function () {
-    const { top, right } = this.dom.getBoundingClientRect();
-    const { paddingTop } = getComputedStyle(this.dom);
-    newProjectSubmenu.setLeft(right + "px");
-    newProjectSubmenu.setTop(top - parseFloat(paddingTop) + "px");
-    newProjectSubmenu.setDisplay("block");
+  // New 버튼
+  const newButton = new UIRow();
+  newButton.setClass("option button-style");
+  newButton.dom.innerHTML = `
+    <i class="fas fa-file"></i>
+    <span>${strings.getKey("menubar/file/new")}</span>
+  `;
+  newButton.onClick(function () {
+    if (confirm("Any unsaved data will be lost. Are you sure?")) {
+      editor.clear();
+      location.reload();
+    }
   });
-  newProjectSubmenuTitle.onMouseOut(function () {
-    newProjectSubmenu.setDisplay("none");
-  });
-  options.add(newProjectSubmenuTitle);
+  options.add(newButton);
 
-  const newProjectSubmenu = new UIPanel()
-    .setPosition("fixed")
-    .addClass("options")
-    .setDisplay("none");
-  newProjectSubmenuTitle.add(newProjectSubmenu);
+  // Import 버튼
+  const importButton = new UIRow();
+  importButton.setClass("option button-style");
+  importButton.dom.innerHTML = `
+    <i class="fas fa-file-import"></i>
+    <span>${strings.getKey("menubar/file/import")}</span>
+  `;
+  importButton.onClick(function () {
+    const input = document.createElement("input");
+    input.type = "file";
+    input.addEventListener("change", function () {
+      editor.loader.loadFiles(input.files);
+    });
+    input.click();
+  });
+  options.add(importButton);
+
+  // Export 버튼
+  // const exportButton = new UIRow();
+  // exportButton.setClass("option button-style");
+  // exportButton.dom.innerHTML = `
+  //   <i class="fas fa-file-export"></i>
+  //   <span>${strings.getKey("menubar/file/export")}</span>
+  // `;
+  // exportButton.onClick(function () {
+  //   exportSubmenu.setDisplay(
+  //     exportSubmenu.dom.style.display === "none" ? "block" : "none"
+  //   );
+  // });
+  // options.add(exportButton);
+
+  // Publish 버튼
+  // const publishButton = new UIRow();
+  // publishButton.setClass("option button-style");
+  // publishButton.dom.innerHTML = `
+  //   <i class="fas fa-globe"></i>
+  //   <span>${strings.getKey("menubar/file/publish")}</span>
+  // `;
+  // publishButton.onClick(function () {
+  //   publishSubmenu.setDisplay(
+  //     publishSubmenu.dom.style.display === "none" ? "block" : "none"
+  //   );
+  // });
+  // options.add(publishButton);
+
+  // Export 서브메뉴
+  const exportSubmenu = new UIPanel();
+  exportSubmenu.setClass("submenu");
+  exportSubmenu.dom.style.display = "none";
+  options.add(exportSubmenu);
+
+  // Publish 서브메뉴
+  const publishSubmenu = new UIPanel();
+  publishSubmenu.setClass("submenu");
+  publishSubmenu.dom.style.display = "none";
+  options.add(publishSubmenu);
+
+  // New Project 버튼
+  // const newProjectButton = new UIRow();
+  // newProjectButton.setClass("option button-style");
+  // newProjectButton.dom.innerHTML = `
+  //   <i class="fas fa-folder-plus"></i>
+  //   <span>${strings.getKey("menubar/file/new")}</span>
+  // `;
+  // newProjectButton.onClick(function () {
+  //   newProjectSubmenu.setDisplay(
+  //     newProjectSubmenu.dom.style.display === "none" ? "block" : "none"
+  //   );
+  // });
+  // options.add(newProjectButton);
+
+  // New Project 서브메뉴
+  const newProjectSubmenu = new UIPanel();
+  newProjectSubmenu.setClass("submenu");
+  newProjectSubmenu.setPosition("fixed");
+  newProjectSubmenu.dom.style.display = "none";
+  options.add(newProjectSubmenu);
 
   // New Project / Empty
-
   let option = new UIRow()
     .setTextContent(strings.getKey("menubar/file/new/empty"))
     .setClass("option");
@@ -99,8 +162,7 @@ function MenubarFile(editor) {
 
   // }
 
-  // Open
-
+  // Open Project Form
   const openProjectForm = document.createElement("form");
   openProjectForm.style.display = "none";
   document.body.appendChild(openProjectForm);
@@ -111,107 +173,67 @@ function MenubarFile(editor) {
   openProjectInput.accept = ".json";
   openProjectInput.addEventListener("change", async function () {
     const file = openProjectInput.files[0];
-
     if (file === undefined) return;
 
     try {
       const json = JSON.parse(await file.text());
+      console.log("Loading project:", json); // 불러오는 데이터 확인
 
       async function onEditorCleared() {
         await editor.fromJSON(json);
-
         editor.signals.editorCleared.remove(onEditorCleared);
       }
 
       editor.signals.editorCleared.add(onEditorCleared);
-
       editor.clear();
     } catch (e) {
       alert(strings.getKey("prompt/file/failedToOpenProject"));
       console.error(e);
     } finally {
-      form.reset();
+      openProjectForm.reset();
     }
   });
 
   openProjectForm.appendChild(openProjectInput);
 
-  option = new UIRow()
-    .addClass("option")
-    .setTextContent(strings.getKey("menubar/file/open"))
-    .onClick(function () {
-      if (confirm(strings.getKey("prompt/file/open"))) {
-        openProjectInput.click();
-      }
-    });
-
+  // Open 버튼
+  option = new UIRow();
+  option.setClass("option button-style");
+  option.dom.innerHTML = `
+    <i class="fas fa-folder-open"></i>
+    <span>${strings.getKey("menubar/file/open")}</span>
+  `;
+  option.onClick(function () {
+    if (confirm(strings.getKey("prompt/file/open"))) {
+      openProjectInput.click();
+    }
+  });
   options.add(option);
 
-  // Save
-
-  option = new UIRow()
-    .addClass("option")
-    .setTextContent(strings.getKey("menubar/file/save"))
-    .onClick(function () {
-      const json = editor.toJSON();
-      const blob = new Blob([JSON.stringify(json)], {
-        type: "application/json",
-      });
-      editor.utils.save(blob, "project.json");
-    });
-
+  // Save 버튼
+  option = new UIRow();
+  option.setClass("option button-style");
+  option.dom.innerHTML = `
+    <i class="fas fa-save"></i>
+    <span>${strings.getKey("menubar/file/save")}</span>
+  `;
+  option.onClick(function () {
+    const json = editor.toJSON();
+    console.log("Saving project:", json); // 저장되는 전체 데이터 확인
+    // 특히 music 데이터가 있는지 확인
+    if (json.music) {
+      console.log("Music data being saved:", json.music);
+    } else {
+      console.log("No music data to save");
+    }
+    const blob = new Blob([JSON.stringify(json)], { type: "application/json" });
+    editor.utils.save(blob, "project.json");
+  });
   options.add(option);
 
   //
 
   options.add(new UIHorizontalRule());
-
-  // Import
-
-  const form = document.createElement("form");
-  form.style.display = "none";
-  document.body.appendChild(form);
-
-  const fileInput = document.createElement("input");
-  fileInput.multiple = true;
-  fileInput.type = "file";
-  fileInput.addEventListener("change", function () {
-    editor.loader.loadFiles(fileInput.files);
-    form.reset();
-  });
-  form.appendChild(fileInput);
-
-  option = new UIRow();
-  option.setClass("option");
-  option.setTextContent(strings.getKey("menubar/file/import"));
-  option.onClick(function () {
-    fileInput.click();
-  });
-  options.add(option);
-
-  // Export
-
-  const fileExportSubmenuTitle = new UIRow()
-    .setTextContent(strings.getKey("menubar/file/export"))
-    .addClass("option")
-    .addClass("submenu-title");
-  fileExportSubmenuTitle.onMouseOver(function () {
-    const { top, right } = this.dom.getBoundingClientRect();
-    const { paddingTop } = getComputedStyle(this.dom);
-    fileExportSubmenu.setLeft(right + "px");
-    fileExportSubmenu.setTop(top - parseFloat(paddingTop) + "px");
-    fileExportSubmenu.setDisplay("block");
-  });
-  fileExportSubmenuTitle.onMouseOut(function () {
-    fileExportSubmenu.setDisplay("none");
-  });
-  options.add(fileExportSubmenuTitle);
-
-  const fileExportSubmenu = new UIPanel()
-    .setPosition("fixed")
-    .addClass("options")
-    .setDisplay("none");
-  fileExportSubmenuTitle.add(fileExportSubmenu);
 
   // Export DRC
 
@@ -246,7 +268,7 @@ function MenubarFile(editor) {
     const result = exporter.parse(object, options);
     saveArrayBuffer(result, "model.drc");
   });
-  fileExportSubmenu.add(option);
+  exportSubmenu.add(option);
 
   // Export GLB
 
@@ -275,10 +297,10 @@ function MenubarFile(editor) {
         saveArrayBuffer(result, "scene.glb");
       },
       undefined,
-      { binary: true, animations: optimizedAnimations },
+      { binary: true, animations: optimizedAnimations }
     );
   });
-  fileExportSubmenu.add(option);
+  exportSubmenu.add(option);
 
   // Export GLTF
 
@@ -307,10 +329,10 @@ function MenubarFile(editor) {
         saveString(JSON.stringify(result, null, 2), "scene.gltf");
       },
       undefined,
-      { animations: optimizedAnimations },
+      { animations: optimizedAnimations }
     );
   });
-  fileExportSubmenu.add(option);
+  exportSubmenu.add(option);
 
   // Export OBJ
 
@@ -333,7 +355,7 @@ function MenubarFile(editor) {
 
     saveString(exporter.parse(object), "model.obj");
   });
-  fileExportSubmenu.add(option);
+  exportSubmenu.add(option);
 
   // Export PLY (ASCII)
 
@@ -351,7 +373,7 @@ function MenubarFile(editor) {
       saveArrayBuffer(result, "model.ply");
     });
   });
-  fileExportSubmenu.add(option);
+  exportSubmenu.add(option);
 
   // Export PLY (BINARY)
 
@@ -370,10 +392,10 @@ function MenubarFile(editor) {
       function (result) {
         saveArrayBuffer(result, "model-binary.ply");
       },
-      { binary: true },
+      { binary: true }
     );
   });
-  fileExportSubmenu.add(option);
+  exportSubmenu.add(option);
 
   // Export STL (ASCII)
 
@@ -389,7 +411,7 @@ function MenubarFile(editor) {
 
     saveString(exporter.parse(editor.scene), "model.stl");
   });
-  fileExportSubmenu.add(option);
+  exportSubmenu.add(option);
 
   // Export STL (BINARY)
 
@@ -405,10 +427,10 @@ function MenubarFile(editor) {
 
     saveArrayBuffer(
       exporter.parse(editor.scene, { binary: true }),
-      "model-binary.stl",
+      "model-binary.stl"
     );
   });
-  fileExportSubmenu.add(option);
+  exportSubmenu.add(option);
 
   // Export USDZ
 
@@ -424,7 +446,7 @@ function MenubarFile(editor) {
 
     saveArrayBuffer(await exporter.parseAsync(editor.scene), "model.usdz");
   });
-  fileExportSubmenu.add(option);
+  exportSubmenu.add(option);
 
   //
 
@@ -442,3 +464,13 @@ function MenubarFile(editor) {
 }
 
 export { MenubarFile };
+
+// window.addEventListener("load", () => {
+//   const savedMusicState = localStorage.getItem("musicState");
+//   if (savedMusicState) {
+//     editor.music = JSON.parse(savedMusicState);
+//     // 필요한 경우 UI 요소 업데이트
+//     startTimeUi.dom.value = formatTime(editor.music.startTime);
+//     endTimeUi.dom.value = formatTime(editor.music.endTime);
+//   }
+// });

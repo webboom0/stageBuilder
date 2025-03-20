@@ -519,11 +519,16 @@ Editor.prototype = {
       this.signals.sceneEnvironmentChanged.dispatch(json.environment);
       this.signals.refreshSidebarEnvironment.dispatch();
     }
+
+    // // Music 컴포넌트 초기화
+    // if (json.music) {
+    //   this.music.fromJSON(json.music);
+    // }
   },
 
   toJSON: function () {
     // scripts clean up
-
+    console.log("Editor toJSON called"); // 디버깅용 로그
     var scene = this.scene;
     var scripts = this.scripts;
 
@@ -558,7 +563,7 @@ Editor.prototype = {
         shadowType: this.config.getKey("project/renderer/shadowType"),
         toneMapping: this.config.getKey("project/renderer/toneMapping"),
         toneMappingExposure: this.config.getKey(
-          "project/renderer/toneMappingExposure",
+          "project/renderer/toneMappingExposure"
         ),
       },
       camera: this.viewportCamera.toJSON(),
@@ -566,6 +571,7 @@ Editor.prototype = {
       scripts: this.scripts,
       history: this.history.toJSON(),
       environment: environment,
+      music: this.music ? this.music.toJSON() : undefined, // music 정보 저장
     };
   },
 

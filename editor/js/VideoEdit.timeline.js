@@ -3,9 +3,13 @@ import { UIPanel, UIRow, UIButton, UIText } from "./libs/ui.js";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { Render } from "./VideoEdit.Render.js";
 
-function VideoEditTimeline(editor, _totalSeconds, _framesPerSecond) {
+function VideoEditTimeline(
+  editor,
+  _totalSeconds,
+  _framesPerSecond,
+  _newWindow
+) {
   console.log("VideoEditTimeline");
-
   const plane = {
     planeId: "38415372-2e99-4c9a-a1ba-b6d9a1977f92",
     create: function () {
@@ -15,7 +19,7 @@ function VideoEditTimeline(editor, _totalSeconds, _framesPerSecond) {
         console.log("바닥생성");
         const plane = new THREE.Mesh(
           new THREE.PlaneGeometry(10, 10),
-          new THREE.MeshStandardMaterial({ color: 0x808080 }),
+          new THREE.MeshStandardMaterial({ color: 0x808080 })
         );
         plane.receiveShadow = true;
         plane.uuid = "38415372-2e99-4c9a-a1ba-b6d9a1977f92";
@@ -24,14 +28,25 @@ function VideoEditTimeline(editor, _totalSeconds, _framesPerSecond) {
   };
 
   let editorSceneChildrenCall = false;
+  console.log("editor");
+  console.log(editor);
+  let editorSceneChildrenCallIntervalTime = 0;
   const editorSceneChildrenCallInterval = setInterval(() => {
     console.log("editorSceneChildrenCallInterval");
-    console.log(editor.scene.children);
-    if (editor.scene.children.length > 0) {
+    console.log(editor.scene.children.length);
+    if (Object.keys(editor.scene.userData).length > 0) {
       editorSceneChildrenCall = true;
       plane.create(); // 바닥 생성
       onload(); // 타임라인 생성
     }
+    editorSceneChildrenCallIntervalTime++;
+    if (editorSceneChildrenCallIntervalTime > 30) {
+      clearInterval(editorSceneChildrenCallInterval);
+    }
+    // plane.create(); // 바닥 생성
+    // onload(); // 타임라인 생성
+    // clearInterval(editorSceneChildrenCallInterval);
+
     if (editorSceneChildrenCall) {
       clearInterval(editorSceneChildrenCallInterval);
     }
@@ -133,21 +148,72 @@ function VideoEditTimeline(editor, _totalSeconds, _framesPerSecond) {
     }
   });
 
+  // 트랙 그룹 - 왼쪽쪽
+  const leftGroup = new UIRow();
+  leftGroup.setClass("leftGroup");
+  container.add(leftGroup);
+  // 트랙 그룹 - 왼쪽 상단
+  const leftGroupTop = new UIRow();
+  leftGroupTop.setClass("leftGroupTop");
+  leftGroup.add(leftGroupTop);
   // 트랙 추가 버튼
-  const addTrackBtn = new UIButton("add");
-  container.add(addTrackBtn);
+  const addTrackBtn = new UIButton();
+  addTrackBtn.dom.innerHTML = `
+    <i class="fas fa-plus"></i>
+    <span>트랙추가</span>
+  `;
+  leftGroupTop.add(addTrackBtn);
   addTrackBtn.onClick(function (e) {
     console.log("addTrack clicked");
     if (editor.selected != null) {
-      addKeyframe(0, editor.selected.uuid, e.target);
+      // addKeyframe(0, editor.selected.uuid, e.target);
+      console.log("editor.scene.userData@@@@@@@@@@@@@@@@@@@@@@");
+      console.log(editor.scene.userData);
+      // console.log(
+      //   !Object.keys(editor.scene.userData.keyframes).includes(
+      //     editor.selected.uuid,
+      //   ),
+      // );
+      // if (
+      //   !Object.keys(editor.scene.userData.keyframes).includes(
+      //     editor.selected.uuid,
+      //   )
+      // ) {
+      // 키프레임 데이터 초기화
+      if (!editor.scene.userData.keyframes) {
+        editor.scene.userData.keyframes = {};
+      }
+
+      if (!editor.scene.userData.keyframes[editor.selected.uuid]) {
+        editor.scene.userData.keyframes[editor.selected.uuid] = [];
+      }
+
+      // const keyframes = editor.scene.userData.keyframes[editor.selected.uuid];
+      // keyframes.push({
+      //   frameIndex: null,
+      //   position: null,
+      // });
+      // } else {
+      //   message(`${editor.selected.uuid} 트랙이 이미 존재합니다.`);
+      //   return;
+      // }
+
+      addPointTarget(e.target);
+      onload();
+      selectedObject(editor.selected.uuid); // 선택된 객체 설정
+      // timelineObjectActive(editor.selected.uuid); // 타임라인 객체 활성화
     } else {
       alert("씬에서 객체를 선택해주세요.");
     }
   });
 
   // 트랙 제거 버튼
-  const delTrackBtn = new UIButton("del");
-  container.add(delTrackBtn);
+  const delTrackBtn = new UIButton();
+  delTrackBtn.dom.innerHTML = `
+    <i class="fas fa-minus"></i>
+    <span>트랙삭삭제</span>
+  `;
+  leftGroupTop.add(delTrackBtn);
   delTrackBtn.onClick(function () {
     console.log("delTrack clicked");
     const selected = editor.selected;
@@ -173,36 +239,48 @@ function VideoEditTimeline(editor, _totalSeconds, _framesPerSecond) {
     let newLeft = time * 20;
     currentFrameBar.setStyle("left", [`${newLeft}px`]);
   }
+  let renderInstance = null;
+  // Render(editor, _totalSeconds, _framesPerSecond, _newWindow);
+
+  // const existingTimelineGroup = container.dom.querySelector(".timelineGroup");
+  // if (existingTimelineGroup) {
+  //   container.dom.removeChild(existingTimelineGroup);
+  // }
+  const timelineGroup = new UIRow(); // 타임라인 그룹
+  timelineGroup.setClass("timelineGroup");
+  container.add(timelineGroup);
+  const timelineTop = new UIRow(); // 타임라인 상단
+  timelineTop.setClass("timelineTop");
+  timelineGroup.add(timelineTop);
+  for (let i = 0; i < _totalSeconds; i++) {
+    const topframeButton = new UIButton(i); // 타임라인 상단 프레임 버튼
+    topframeButton.setClass("frameButton");
+    timelineTop.add(topframeButton);
+  }
 
   function onload() {
-    if (document.querySelectorAll(".timelineGroup").length > 0) {
-      document.querySelectorAll(".timelineGroup").forEach((element) => {
+    if (document.querySelectorAll(".timelineBar").length > 0) {
+      document.querySelectorAll(".timelineBar").forEach((element) => {
         console.log("onload timelineGroup 삭제");
         console.log(element);
-        element.innerHTML = "";
+        element.remove();
       });
+
+      document
+        .querySelectorAll(".leftGroupTrack .object")
+        .forEach((element) => {
+          console.log("onload leftGroupTrack 삭제");
+          console.log(element);
+          // element.innerHTML = "";
+          element.remove();
+        });
     }
     console.log("onload");
+
     const keyframes = editor.scene.userData.keyframes;
     if (!keyframes) {
       console.log("No keyframes found. Exiting function.");
       return;
-    }
-
-    const existingTimelineGroup = container.dom.querySelector(".timelineGroup");
-    if (existingTimelineGroup) {
-      container.dom.removeChild(existingTimelineGroup);
-    }
-    const timelineGroup = new UIRow(); // 타임라인 그룹
-    timelineGroup.setClass("timelineGroup");
-    container.add(timelineGroup);
-    const timelineTop = new UIRow(); // 타임라인 상단
-    timelineTop.setClass("top");
-    timelineGroup.add(timelineTop);
-    for (let i = 0; i < _totalSeconds; i++) {
-      const topframeButton = new UIButton(i); // 타임라인 상단 프레임 버튼
-      topframeButton.setClass("frameButton");
-      timelineTop.add(topframeButton);
     }
 
     currentFrameBar.setClass("currentFrameBar");
@@ -210,15 +288,10 @@ function VideoEditTimeline(editor, _totalSeconds, _framesPerSecond) {
 
     let isDragging = false;
     let time = 0;
-    //
-    timelineTop.dom.addEventListener("mousedown", (event) => {
-      isDragging = true;
-      currentFrameMove();
-    });
-
-    document.addEventListener("mousemove", currentFrameMove);
 
     // 현재 프레임 이동(노란색 바)
+    document.addEventListener("mousemove", currentFrameMove);
+
     function currentFrameMove(event) {
       if (isDragging) {
         time = event.target.innerText ? event.target.innerText : time;
@@ -237,16 +310,30 @@ function VideoEditTimeline(editor, _totalSeconds, _framesPerSecond) {
       _signals.transformModeChanged.dispatch("translate");
     }
 
+    const leftGroupTrack = new UIRow();
+    leftGroupTrack.setClass("leftGroupTrack");
+    leftGroup.add(leftGroupTrack);
+
     Object.keys(keyframes).forEach((character) => {
       console.log("Processing character:", character);
-      const timelineBar = new UIRow(); // 타임라인 바
-      timelineBar.setClass("timelineBar");
-      timelineGroup.add(timelineBar);
+      // editor.scene.children 에 해당 character 가 없으면 트랙 삭제
+      if (!editor.scene.children.find((child) => child.uuid == character)) {
+        console.log("character 존재하지 않음");
+        delTrack(character);
+      }
 
       const object = new UIButton(Children.getName(character)); // 객체 버튼
+
+      const timelineBar = new UIRow(); // 타임라인 바
+      timelineBar.setClass("timelineBar");
+      timelineBar.dom.setAttribute("uuid", character);
+      timelineGroup.add(timelineBar);
+      timelineBar.dom.addEventListener("contextmenu", function (e) {
+        e.preventDefault();
+      });
       object.setClass("object");
       object.dom.setAttribute("uuid", character);
-      timelineBar.add(object);
+      leftGroupTrack.add(object);
 
       // 객체 클릭 이벤트
       object.onClick(function (e) {
@@ -259,12 +346,12 @@ function VideoEditTimeline(editor, _totalSeconds, _framesPerSecond) {
       objectControl.setClass("objectControl");
       object.add(objectControl);
 
-      const objectDelBtn = new UIButton("del"); // 객체 삭제 버튼
-      objectDelBtn.setClass("objectDelBtn");
-      objectControl.add(objectDelBtn);
-      objectDelBtn.onClick(function () {
-        console.log("objectDelBtn");
-      });
+      // const objectDelBtn = new UIButton("del"); // 객체 삭제 버튼
+      // objectDelBtn.setClass("objectDelBtn");
+      // objectControl.add(objectDelBtn);
+      // objectDelBtn.onClick(function () {
+      //   console.log("objectDelBtn");
+      // });
 
       const keyframes = editor.scene.userData.keyframes[character] || [];
       console.log(editor.scene.userData.keyframes[character]);
@@ -344,21 +431,25 @@ function VideoEditTimeline(editor, _totalSeconds, _framesPerSecond) {
   }
 
   // 키프레임 선택
-  function selectKeyframe(keyNumber, character, target) {
+  function selectKeyframe(keyNumber, characterUuid, target) {
     console.log("selectKeyframe");
     console.log(keyNumber);
-    console.log(character);
+    console.log(characterUuid);
     console.log(target);
+
+    const character2 = Children.getChildren(characterUuid);
+    console.log("!!!!!!!!!!!!!!!!!!!!!");
+    console.log(character2.position);
+
     hideKeyframeMenu(); // 키프레임 메뉴 숨김
     if (document.querySelector(".frameButton.active")) {
       document.querySelector(".frameButton.active").classList.remove("active");
     }
     _selectedKeyframe = keyNumber; // 선택된 키프레임 번호
-    _selectedKeyframeCharacter = character; // 선택된 키프레임 캐릭터
-    selectedObject(character); // 선택된 객체 설정
-    const trackUuid = target.parentElement
-      .querySelector(".object")
-      .getAttribute("uuid");
+    _selectedKeyframeCharacter = characterUuid; // 선택된 키프레임 캐릭터
+    selectedObject(characterUuid); // 선택된 객체 설정
+
+    const trackUuid = target.parentElement.getAttribute("uuid");
     timelineObjectActive(trackUuid); // 타임라인 객체 활성화
     target.classList.add("active"); // 키프레임 버튼 활성화
     // 키프레임 우측클릭시 메뉴 표시
@@ -381,6 +472,7 @@ function VideoEditTimeline(editor, _totalSeconds, _framesPerSecond) {
     console.log(rect);
     // 메뉴 위치 설정
     keyframeMenu.style.left = `${rect.left}px`;
+    keyframeMenu.style.top = `${rect.top}px`;
     // keyframeMenu.setStyle("left", [`${rect.left}px`]);
     // keyframeMenu.setStyle("top", [`${rect.top}px`]);
 
@@ -412,15 +504,17 @@ function VideoEditTimeline(editor, _totalSeconds, _framesPerSecond) {
     if (!editor.scene.userData.keyframes) {
       editor.scene.userData.keyframes = {};
     }
-
+    // 키프레임 데이터 초기화
     if (!editor.scene.userData.keyframes[characterUuid]) {
       editor.scene.userData.keyframes[characterUuid] = [];
     }
 
     const character = Children.getChildren(characterUuid);
+    console.log("@@@@@@@@@@@@@@@");
+    console.log(character.position);
     const keyframes = editor.scene.userData.keyframes[characterUuid];
     const existingIndex = keyframes.findIndex(
-      (item) => item.frameIndex === frameIndex,
+      (item) => item.frameIndex === frameIndex
     );
 
     if (existingIndex !== -1) {
@@ -433,10 +527,10 @@ function VideoEditTimeline(editor, _totalSeconds, _framesPerSecond) {
     });
 
     editor.scene.userData.keyframes[characterUuid].sort(
-      (a, b) => a.frameIndex - b.frameIndex,
+      (a, b) => a.frameIndex - b.frameIndex
     );
 
-    message("alert", ` ${characterUuid} ${frameIndex} 키 프레임 추가`);
+    // message("alert", ` ${characterUuid} ${frameIndex} 키 프레임 추가`);
     addPointTarget(target);
     onload();
     selectedObject(characterUuid); // 선택된 객체 설정
@@ -451,7 +545,7 @@ function VideoEditTimeline(editor, _totalSeconds, _framesPerSecond) {
     const frameIndex = keyNumber * _framesPerSecond;
     const keyframes = editor.scene.userData.keyframes[characterUuid];
     const existingIndex = keyframes.findIndex(
-      (item) => item.frameIndex === frameIndex,
+      (item) => item.frameIndex === frameIndex
     );
     console.log(`existingIndex : ${existingIndex}`);
     if (existingIndex !== -1) {
@@ -463,25 +557,62 @@ function VideoEditTimeline(editor, _totalSeconds, _framesPerSecond) {
     hideKeyframeMenu();
   }
 
-  // renderButton 버튼
-  const renderButton = new UIButton("Render");
-  container.add(renderButton);
+  // render 버튼 클릭 이벤트
+  let currentRender = null;
+  const renderButton = new UIButton();
+  renderButton.dom.innerHTML = `
+    <i class="fas fa-play"></i>
+    <span>렌더링</span>
+  `;
+  leftGroupTop.add(renderButton);
   renderButton.onClick(function () {
-    Render(editor, _totalSeconds, _framesPerSecond);
+    if (currentRender) {
+      currentRender.renderClose();
+      currentRender = null;
+    }
+    // 새로운 렌더 인스턴스 생성
+    currentRender = new Render(editor, _totalSeconds, _framesPerSecond, false);
+    currentRender.resetAnimation();
   });
 
+  document.body.addEventListener("mousedown", (event) => {
+    console.log("timeline-mousedown");
+    if (!event.target.closest("#renderViewContainer")) {
+      if (currentRender) {
+        currentRender.renderClose();
+        currentRender = null;
+      }
+    }
+  });
+  // 옵션 버튼
+  const optionBtn = new UIButton();
+  optionBtn.setClass("optionBtn Button");
+  optionBtn.dom.innerHTML = `
+    <i class="fas fa-cog"></i>
+    <span>트랙시간설정(초)</span>
+  `;
+  leftGroupTop.add(optionBtn);
+  optionBtn.onClick(function (e) {
+    console.log("optionBtn");
+    e.currentTarget.classList.toggle("active");
+    const optionGroup = document.querySelector(
+      "#videoEditTimeline .optionGroup"
+    );
+    optionGroup.classList.toggle("active");
+  });
   // play 버튼
-  const playButton = new UIButton("Play");
-  container.add(playButton);
-  playButton.onClick(function () {
-    playTimeline(0);
-  });
+  // const playButton = new UIButton("Play");
+  // container.add(playButton);
+  // playButton.onClick(function () {
+  //   playTimeline(0);
+  // });
+
   // stop 버튼
-  const stopButton = new UIButton("stop");
-  container.add(stopButton);
-  stopButton.onClick(function () {
-    clearInterval(_playInterval); // 애니메이션 종료
-  });
+  // const stopButton = new UIButton("stop");
+  // container.add(stopButton);
+  // stopButton.onClick(function () {
+  //   clearInterval(_playInterval); // 애니메이션 종료
+  // });
 
   // 타임라인 플레이 시 애니메이션 적용
   function playTimeline(currentSecond) {
@@ -502,6 +633,7 @@ function VideoEditTimeline(editor, _totalSeconds, _framesPerSecond) {
       interpolateAnimation(currentSecond);
     }, 1000);
   }
+
   // 애니메이션 보간
   function interpolateAnimation(currentSecond) {
     console.log("interpolateAnimation");
@@ -516,6 +648,7 @@ function VideoEditTimeline(editor, _totalSeconds, _framesPerSecond) {
           const character = Children.getChildren(uuid);
           const pos = frames[i].position;
           character.position.copy(pos);
+          // 트랜스폼 모드 변경
           _signals.transformModeChanged.dispatch("translate");
         }
       }
@@ -653,6 +786,7 @@ function VideoEditTimeline(editor, _totalSeconds, _framesPerSecond) {
     }
   }
 */
+
   return container;
 }
 
